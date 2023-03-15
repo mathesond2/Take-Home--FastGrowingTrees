@@ -27,11 +27,11 @@ export default function handler(req: NextApiRequest, res: NextApiResponse<Parsed
 
   const parsedData = parseProductData(data.products, parsedId);
   if (parsedData === notFoundStatus) {
-    res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
     res.status(404).json({ error: `Not found: product with id of ${id} was not found` });
     return;
   }
 
+  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
   res.status(200).json(parsedData);
 }
 
