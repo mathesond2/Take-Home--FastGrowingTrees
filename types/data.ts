@@ -17,12 +17,12 @@ type ProductDetailImage = Pick<Thumbnail, 'src' | 'alt'>;
 
 export type ParsedProduct = ProductDetail & ProductDetailImage;
 
-type Product = {
+export type Product = {
   id: number;
   title: string;
   body: string;
-  vendor: Vendor;
-  product_type: ProductType;
+  vendor: string;
+  product_type: string;
   price: number;
   tags: string;
   images: Thumbnail[];
@@ -38,14 +38,5 @@ type Thumbnail = {
   width: number;
   height: number;
   src: string;
-  variant_ids: any[];
+  variant_ids: unknown[];
 };
-
-export enum ProductType {
-  HardGood = 'Hard Good',
-  Tree = 'Tree',
-}
-
-enum Vendor {
-  FastGrowingTrees = 'Fast Growing Trees',
-}
