@@ -16,7 +16,7 @@ function parseProductData(products: Product[], productID: number): ParsedProduct
   return { id, title, body, price, product_type, src, alt };
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<ParsedProduct | { error: string }>) {
+export default function handler(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.query;
   const parsedId = typeof id === 'string' ? parseInt(id) : id;
 
