@@ -1,5 +1,4 @@
 import { ParsedProducts, Product, RawData } from '@/types/data';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../data.json';
 
 function parseProductsData(data: RawData): ParsedProducts {
@@ -18,13 +17,17 @@ function parseProductsData(data: RawData): ParsedProducts {
   };
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse<ParsedProducts>) {
-  const parsedData = parseProductsData(data);
-  // res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
-  res.setHeader('Cache-Control', 's-maxage=86400');
-  res.status(200).json(parsedData);
-}
-
 export const config = {
   runtime: 'edge',
 };
+
+export default function handler() {
+  const parsedData = parseProductsData(data);
+  return new Response(JSON.stringify(parsedData), {
+    status: 200,
+    headers: {
+      'Cache-Control': 's-maxage=86400, stale-while-revalidate',
+      'content-type': 'application/json',
+    },
+  });
+}
