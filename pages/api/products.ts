@@ -1,8 +1,8 @@
+import { ParsedProducts, Product, RawData } from '@/types/data';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import data from '../../data.json';
-import { RawData, Product, ParsedProducts } from '@/types/data';
 
-function parseStaticJSONData(data: RawData): ParsedProducts {
+function parseProductsData(data: RawData): ParsedProducts {
   function parseData(data: Product[]) {
     return data.map(({ id, title, thumbnail }) => {
       const { src } = thumbnail;
@@ -19,6 +19,6 @@ function parseStaticJSONData(data: RawData): ParsedProducts {
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ParsedProducts>) {
-  const parsedData = parseStaticJSONData(data);
+  const parsedData = parseProductsData(data);
   res.status(200).json(parsedData);
 }
