@@ -1,5 +1,5 @@
 import { ParsedProduct, Product } from '@/types/data';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextRequest } from 'next/server';
 import data from '../../../data.json';
 
 const notFoundStatus = 'not found' as const;
@@ -16,25 +16,33 @@ function parseProductData(products: Product[], productID: number): ParsedProduct
   return { id, title, body, price, product_type, src, alt };
 }
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.query;
+export const config = {
+  runtime: 'edge',
+};
+
+export default function handler(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const id = searchParams.get('id');
   const parsedId = typeof id === 'string' ? parseInt(id) : id;
 
   if (!parsedId || typeof parsedId !== 'number') {
-    res.status(400).json({ error: 'Bad request: please provide a valid number as "id" query param' });
-    return;
+    return new Response(JSON.stringify({ error: 'Bad request: please provide a valid number as "id" query param' }), {
+      status: 400,
+    });
   }
 
   const parsedData = parseProductData(data.products, parsedId);
   if (parsedData === notFoundStatus) {
-    res.status(404).json({ error: `Not found: product with id of ${id} was not found` });
-    return;
+    return new Response(JSON.stringify({ error: `Not found: product with id of ${id} was not found` }), {
+      status: 404,
+    });
   }
 
-  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
-  res.status(200).json(parsedData);
+  return new Response(JSON.stringify(parsedData), {
+    status: 200,
+    headers: {
+      'Cache-Control': 's-maxage=86400, stale-while-revalidate',
+      'content-type': 'application/json',
+    },
+  });
 }
-
-export const config = {
-  runtime: 'edge',
-};
