@@ -20,5 +20,10 @@ function parseProductsData(data: RawData): ParsedProducts {
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<ParsedProducts>) {
   const parsedData = parseProductsData(data);
+  res.setHeader('Cache-Control', 's-maxage=86400, stale-while-revalidate');
   res.status(200).json(parsedData);
 }
+
+export const config = {
+  runtime: 'edge',
+};
