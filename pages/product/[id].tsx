@@ -25,7 +25,6 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  console.log('context', context);
   const { id } = context.params!;
   const nextReq = new NextRequest(new URL(`http://localhost:3000/api/product?id=${id}}`));
   const res = productHandler(nextReq);
@@ -37,7 +36,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 };
 
 export default function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
-  console.log('product', product);
+  // console.log('product', product);
   return (
     <>
       <Head>
