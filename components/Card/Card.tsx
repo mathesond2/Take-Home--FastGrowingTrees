@@ -3,7 +3,8 @@ import ImageWithFallback from '../ImageWithFallback';
 import styles from './Card.module.css';
 
 const imgHeight = '15.75rem';
-const imgWidth = '17.5rem';
+// const imgWidth = '17.5rem';
+const imgWidth = '100%';
 const textMaxWidth = '8.625rem';
 
 type ItemCardProps = {

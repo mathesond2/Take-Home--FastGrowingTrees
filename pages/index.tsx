@@ -1,6 +1,7 @@
 import Card from '@/components/Card/Card';
 import styles from '@/styles/Home.module.css';
 import { ParsedProducts } from '@/types/data';
+import { SimpleGrid } from '@chakra-ui/react';
 import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import handler from './api/products';
@@ -16,9 +17,11 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
       </Head>
       <main className={styles.main}>
         <p>{JSON.stringify(products)}</p>
-        {products.map(({ src, title, id }) => (
-          <Card imgSrc={src} title={title} key={id} />
-        ))}
+        <SimpleGrid columns={[1, null, 2, 3, 4]} spacing={8}>
+          {products.map(({ src, title, id }) => (
+            <Card imgSrc={src} title={title} key={id} />
+          ))}
+        </SimpleGrid>
       </main>
     </>
   );
