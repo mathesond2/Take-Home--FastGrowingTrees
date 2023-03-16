@@ -2,9 +2,9 @@ import { Box, Card, CardBody, CardFooter, Text } from '@chakra-ui/react';
 import Image from 'next/image';
 import styles from './Card.module.css';
 
-const imgHeight = '252px';
-const imgWidth = '280px';
-const textMaxWidth = '138px';
+const imgHeight = '15.75rem';
+const imgWidth = '17.5rem';
+const textMaxWidth = '8.625rem';
 
 type ItemCardProps = {
   imgSrc: string;
