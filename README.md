@@ -25,8 +25,8 @@ API routes may be accessed via:
 
 ## Implementation details
 
-1. Future thoughts (if I had more time)
-   1. modify the given JSON data schema, using 'id' as key for faster product lookup
+1. Future thoughts
+   1. modify the given JSON data schema, using `id` as key for faster product lookup
    2. persist cart data further via localStorage
 1. The application was created via static site generation as performance was a primary focal point in my decisions (per our prior conversation on the new fastgrowingtrees site).
 1. Considering this as a production environment, I chose not to use the latest NextJS `/app` features (still in beta), instead leveraging what is possible in Next13 using the existing `/pages` directory.
