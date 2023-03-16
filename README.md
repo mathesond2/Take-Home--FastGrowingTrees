@@ -1,38 +1,34 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Fastest Growing Trees™️
 
-## Getting Started
+## Get Started
 
-First, run the development server:
+1. Install dependencies: `npm i`.
+1. Run development server: `npm run dev`
+1. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+API routes may be accessed via:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [http://localhost:3000/api/products](http://localhost:3000/api/products)
+- [http://localhost:3000/api/product/PRODUCT_ID](http://localhost:3000/api/product/PRODUCT_ID)
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+## Build &amp; test
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+- run `npm run test` to run both API and UI unit tests
+- run `npm run build` to create the production build
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Main tools used
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- [Next.js](https://nextjs.org/)
+- [Chakra UI](https://chakra-ui.com/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Jest](https://jestjs.io/)
 
-## Learn More
+## Implementation details
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. Future thoughts (if I had more time)
+   1. modify the given JSON data schema, using 'id' as key for faster product lookup
+   2. persist cart data further via localStorage
+1. The application was created via static site generation as performance was a primary focal point in my decisions (per our prior conversation on the new fastgrowingtrees site).
+1. Considering this as a production environment, I chose not to use the latest NextJS `/app` features (still in beta), instead leveraging what is possible in Next13 using the existing `/pages` directory.
+1. The given JSON file's products contained some unnecessary data (for the designs given), so I parsed them out at the API level to reduce complexity on the UI side, only using what is needed now.
+1. Unit tests are placed by their associated files to encourage modularity.
