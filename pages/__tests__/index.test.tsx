@@ -16,7 +16,7 @@ const products = [
 ];
 
 describe('Home', () => {
-  it('renders products', () => {
+  it('renders product links', () => {
     render(<Home products={products} />);
     const links = screen.getAllByRole('link');
     expect(links).toHaveLength(2);
