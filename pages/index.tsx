@@ -7,6 +7,24 @@ import Head from 'next/head';
 import Link from 'next/link';
 import handler from './api/products';
 
+export async function getStaticProps() {
+  const res = handler();
+  const data: ParsedProducts = await res.json();
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      products: data.products,
+    },
+    revalidate: 86400,
+  };
+}
+
 export default function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -27,22 +45,4 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
       </main>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const res = handler();
-  const data: ParsedProducts = await res.json();
-
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-
-  return {
-    props: {
-      products: data.products,
-    },
-    revalidate: 86400,
-  };
 }
