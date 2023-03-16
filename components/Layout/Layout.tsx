@@ -7,7 +7,7 @@ export default function Layout({ children }: PropsWithChildren) {
   return (
     <Container maxW="full" paddingX={14} paddingY={9} className={styles.background}>
       <Navbar />
-      <Box paddingX={10}>{children}</Box>
+      <Box>{children}</Box>
     </Container>
   );
 }
