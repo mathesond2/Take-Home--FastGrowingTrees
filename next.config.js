@@ -19,10 +19,10 @@ const securityHeaders = [
     key: 'X-XSS-Protection',
     value: '1; mode=block',
   },
-  {
-    key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
-  },
+  // {
+  //   key: 'Content-Security-Policy',
+  //   value: ContentSecurityPolicy.replace(/\s{2,}/g, ' ').trim(),
+  // },
 ];
 
 /** @type {import('next').NextConfig} */
@@ -40,14 +40,14 @@ const nextConfig = {
       },
     ],
   },
-  // async headers() {
-  //   return [
-  //     {
-  //       source: '/:path*',
-  //       headers: securityHeaders,
-  //     },
-  //   ]
-  // },
+  async headers() {
+    return [
+      {
+        source: '/:path*',
+        headers: securityHeaders,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
