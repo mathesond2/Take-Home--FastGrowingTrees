@@ -32,9 +32,16 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
 export async function getStaticProps() {
   const res = handler();
   const data: ParsedProducts = await res.json();
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: {
-      products: data.products, //NOTE: consider 'recomendations'
+      products: data.products,
     },
     revalidate: 86400,
   };
