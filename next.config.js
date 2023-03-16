@@ -1,8 +1,8 @@
 const ContentSecurityPolicy = `
   default-src 'self';
   script-src 'self';
-  child-src 'self';
-  style-src 'self';
+  child-src 'self' https://localhost:3000;
+  style-src 'self' https://localhost:3000;
   font-src 'self';
 `;
 
@@ -28,14 +28,14 @@ const securityHeaders = [
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  async headers() {
-    return [
-      {
-        source: '/:path*',
-        headers: securityHeaders,
-      },
-    ];
-  },
+  // async headers() {
+  //   return [
+  //     {
+  //       source: '/:path*',
+  //       headers: securityHeaders,
+  //     },
+  //   ]
+  // },
 };
 
 module.exports = nextConfig;
