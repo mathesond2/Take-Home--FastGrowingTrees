@@ -8,11 +8,11 @@ const imgWidth = '100%';
 const textMaxWidth = '8.625rem';
 
 type ItemCardProps = {
-  imgSrc: string;
+  src: string;
   title: string;
 };
 
-export default function ItemCard({ imgSrc, title }: ItemCardProps): JSX.Element {
+export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
   return (
     <Card
       display="inline-flex"
@@ -21,12 +21,14 @@ export default function ItemCard({ imgSrc, title }: ItemCardProps): JSX.Element 
       borderColor="rgba(196, 196, 196, 0.75)"
       borderWidth={1}
       boxShadow="0 2px 4px 0 rgba(0, 0, 0, 0.1)"
+      w="100%"
+      h="100%"
     >
       <CardBody p="0" overflow="hidden">
         <Box position={'relative'} h={imgHeight} w={imgWidth} borderTopRadius="lg">
           {/* NOTE: tweak 'sizes' further as design develops, and consider generating solid color blurred images within getStaticProps */}
           <ImageWithFallback
-            src={imgSrc}
+            src={src}
             alt={title}
             className={styles.image}
             style={{ objectFit: 'cover' }}
