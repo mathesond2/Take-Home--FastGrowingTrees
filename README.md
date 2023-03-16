@@ -4,7 +4,7 @@
 
 1. Install dependencies: `npm i`.
 1. Run development server: `npm run dev`
-1. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Open [http://localhost:3000](http://localhost:3000)
 
 API routes may be accessed via:
 
