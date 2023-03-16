@@ -17,7 +17,6 @@ export default function Home({ products }: InferGetStaticPropsType<typeof getSta
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <p>{JSON.stringify(products)}</p>
         <SimpleGrid columns={[1, null, 2, 3]} spacing={8}>
           {products.map(({ src, title, id }) => (
             <Link href={`/product/${encodeURIComponent(id)}`} key={id}>

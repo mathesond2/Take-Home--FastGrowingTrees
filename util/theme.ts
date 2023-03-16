@@ -7,6 +7,13 @@ const theme = extendTheme({
     body: fontStack,
     mono: fontStack,
   },
+  styles: {
+    global: {
+      body: {
+        bg: '#d0e0b5',
+      },
+    },
+  },
 });
 
 export default theme;
