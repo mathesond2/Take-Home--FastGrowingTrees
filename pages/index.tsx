@@ -1,8 +1,11 @@
-import styles from '@/styles/Home.module.css';
-import Head from 'next/head';
 import Card from '@/components/Card/Card';
+import styles from '@/styles/Home.module.css';
+import { ParsedProducts } from '@/types/data';
+import { InferGetStaticPropsType } from 'next';
+import Head from 'next/head';
+import handler from './api/products';
 
-export default function Home() {
+export default function Home({ products }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -12,11 +15,22 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Card
-          imgSrc="https://cdn.shopify.com/s/files/1/0059/8835/2052/products/Cold_Hardy_Avocado_FGT_600x600_94a0fedf-56ac-4470-aed8-b24bc2a20132.jpg?v=1612444134"
-          title="Cold Hardy Avocado Tree"
-        />
+        <p>{JSON.stringify(products)}</p>
+        {products.map(({ src, title, id }) => (
+          <Card imgSrc={src} title={title} key={id} />
+        ))}
       </main>
     </>
   );
+}
+
+export async function getStaticProps() {
+  const res = handler();
+  const data: ParsedProducts = await res.json();
+  return {
+    props: {
+      products: data.products, //NOTE: consider 'recomendations'
+    },
+    revalidate: 86400,
+  };
 }

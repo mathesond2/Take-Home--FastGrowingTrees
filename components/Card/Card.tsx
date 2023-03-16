@@ -1,5 +1,5 @@
 import { Box, Card, CardBody, CardFooter, Text } from '@chakra-ui/react';
-import Image from 'next/image';
+import ImageWithFallback from '../ImageWithFallback';
 import styles from './Card.module.css';
 
 const imgHeight = '15.75rem';
@@ -24,7 +24,7 @@ export default function ItemCard({ imgSrc, title }: ItemCardProps): JSX.Element 
       <CardBody p="0" overflow="hidden">
         <Box position={'relative'} h={imgHeight} w={imgWidth} borderTopRadius="lg">
           {/* NOTE: tweak 'sizes' further as design develops, and consider generating solid color blurred images within getStaticProps */}
-          <Image
+          <ImageWithFallback
             src={imgSrc}
             alt={title}
             className={styles.image}
@@ -33,9 +33,7 @@ export default function ItemCard({ imgSrc, title }: ItemCardProps): JSX.Element 
             sizes="(max-width: 768px) 100vw,
           (max-width: 1200px) 100vw,
           100vw"
-            onError={(e) => {
-              e.currentTarget.src = 'https://via.placeholder.com/280x252.png?text=?';
-            }}
+            fallbackSrc="https://via.placeholder.com/280x252.png?text=?"
             // placeholder='blur'
           />
         </Box>
