@@ -1,6 +1,7 @@
 import { Flex, Link } from '@chakra-ui/react';
 import Image from 'next/image';
 import iconSVG from '../public/icon.svg';
+import Cart from './Cart';
 
 export default function Navbar() {
   return (
@@ -8,7 +9,7 @@ export default function Navbar() {
       <Link href="/" _hover={{ textDecoration: 'none' }}>
         <Image src={iconSVG} alt="cluster of trees" />
       </Link>
-      <p>cart here</p>
+      <Cart />
     </Flex>
   );
 }
