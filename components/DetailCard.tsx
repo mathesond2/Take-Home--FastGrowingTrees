@@ -7,12 +7,7 @@ type DetailCardProps = {
   body: string;
 };
 
-export default function DetailCard({
-  title,
-  subtitle,
-  body,
-  children,
-}: PropsWithChildren<DetailCardProps>): JSX.Element {
+export default function DetailCard({ title, subtitle, body, children }: PropsWithChildren<DetailCardProps>) {
   return (
     <VStack spacing={4} alignItems="normal" bgColor="white" p={4} h="fit-content">
       <Text fontSize="4xl" fontWeight={500} lineHeight={10}>

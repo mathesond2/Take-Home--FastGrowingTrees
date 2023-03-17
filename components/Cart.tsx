@@ -1,6 +1,7 @@
-import { primaryRed } from '@/util';
+import { primaryRed, formatUSD } from '@/util';
 import { useCart } from '@/util/CartContext';
 import {
+  Flex,
   Box,
   Center,
   Drawer,
@@ -10,16 +11,15 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
-  Flex,
   Icon,
   IconButton,
   Text,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
-import Image from 'next/image';
 import { useRef } from 'react';
 import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
+import CartItem from './CartItem';
 
 const primaryGreen = '#155343';
 const inlineStyles = {
@@ -31,8 +31,6 @@ const inlineStyles = {
     color: primaryGreen,
   },
 };
-
-const thumbnailSize = '110';
 
 const sharedIconButtonProps = {
   bgColor: 'transparent',
@@ -48,6 +46,7 @@ export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   const { cart, setCart } = useCart();
+  const cartSubtotal = cart?.reduce((acc, { price }) => acc + price, 0) || 0;
 
   return (
     <>
@@ -73,25 +72,36 @@ export default function Cart() {
 
           <DrawerBody>
             {cart?.map(({ id, title, price, src, alt }) => (
-              <Flex key={id} mb={4}>
-                <Image src={src} alt={alt || title} width={thumbnailSize} height={thumbnailSize} />
-                <VStack spacing={4} alignItems="normal" ml={5}>
-                  <Text fontWeight={500}>{title}</Text>
-                  <Text>${price}</Text>
-                </VStack>
-                <Center ml="auto">
-                  <IconButton
-                    onClick={() => {
-                      setCart((prev) => prev?.filter((item) => item.id !== id));
-                    }}
-                    aria-label="remove from cart"
-                    icon={<Icon as={IoTrash} boxSize={6} color={primaryRed} />}
-                    borderColor={primaryRed}
-                    {...sharedIconButtonProps}
-                  />
-                </Center>
-              </Flex>
+              <CartItem
+                key={id}
+                src={src}
+                alt={alt || title}
+                midSection={
+                  <VStack spacing={4} alignItems="normal" ml={5}>
+                    <Text fontWeight={500}>{title}</Text>
+                    <Text>{formatUSD(price)}</Text>
+                  </VStack>
+                }
+              >
+                <IconButton
+                  onClick={() => {
+                    setCart((prev) => prev?.filter((item) => item.id !== id));
+                  }}
+                  aria-label="remove from cart"
+                  icon={<Icon as={IoTrash} boxSize={6} color={primaryRed} />}
+                  borderColor={primaryRed}
+                  {...sharedIconButtonProps}
+                />
+              </CartItem>
             ))}
+            {cartSubtotal > 0 && (
+              <Flex mt={4} justifyContent="space-between">
+                <Text fontSize="lg" fontWeight={500}>
+                  Subtotal
+                </Text>
+                <Text fontSize="lg">{formatUSD(cartSubtotal)}</Text>
+              </Flex>
+            )}
           </DrawerBody>
 
           <DrawerFooter>
