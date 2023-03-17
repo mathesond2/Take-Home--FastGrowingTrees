@@ -36,7 +36,6 @@ export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
           (max-width: 1200px) 100vw,
           100vw"
             fallbackSrc="https://via.placeholder.com/280x252.png?text=?"
-            // placeholder='blur'
           />
         </Box>
       </CardBody>
