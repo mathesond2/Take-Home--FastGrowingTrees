@@ -1,8 +1,8 @@
 import {
+  Center,
   Box,
   Icon,
   IconButton,
-  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -12,8 +12,19 @@ import {
   DrawerOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
-import { BsCart4 } from 'react-icons/bs';
+import { IoCart, IoCartOutline } from 'react-icons/io5';
 import { useRef } from 'react';
+
+const primaryGreen = '#155343';
+const inlineStyles = {
+  closeIcon: {
+    position: 'absolute',
+    left: '1.5rem',
+    top: '1rem',
+    fontSize: '1.5rem',
+    color: primaryGreen,
+  },
+};
 
 export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -21,25 +32,29 @@ export default function Cart() {
 
   return (
     <>
-      <Button ref={btnRef} colorScheme="teal" onClick={onOpen}>
-        Open
-      </Button>
-
       <Box onClick={onOpen}>
         <IconButton
           ref={btnRef}
           aria-label="cart"
-          icon={<Icon as={BsCart4} />}
+          icon={<Icon as={IoCart} boxSize={6} />}
           bgColor="transparent"
+          borderStyle="solid"
+          borderColor="initial"
+          borderWidth={2}
           _hover={{ bgColor: 'transparent' }}
+          isRound
         />
         {/* <CartCounter /> */}
       </Box>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef} size="md">
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerHeader>Create your account</DrawerHeader>
-          <DrawerCloseButton />
+          <DrawerCloseButton size="lg" _hover={{ bgColor: 'transparent' }} style={inlineStyles.closeIcon} />
+          <DrawerHeader>
+            <Center>
+              <Icon as={IoCartOutline} boxSize={10} color={primaryGreen} />
+            </Center>
+          </DrawerHeader>
 
           <DrawerBody></DrawerBody>
 
