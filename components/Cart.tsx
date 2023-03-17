@@ -1,9 +1,9 @@
-import { primaryRed, formatUSD } from '@/util';
+import { formatUSD, primaryRed } from '@/util';
 import { useCart } from '@/util/CartContext';
 import {
-  Flex,
   Box,
   Center,
+  Circle,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -11,6 +11,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Flex,
   Icon,
   IconButton,
   Text,
@@ -48,9 +49,17 @@ export default function Cart() {
   const { cart, setCart } = useCart();
   const cartSubtotal = cart?.reduce((acc, { price }) => acc + price, 0) || 0;
 
+  const CartCounter = () => (
+    <Box position="absolute" right="-8px" top="-6px">
+      <Circle size={5} bg={primaryRed} fontSize="xs">
+        <Text color="white">{cart?.length}</Text>
+      </Circle>
+    </Box>
+  );
+
   return (
     <>
-      <Box onClick={onOpen}>
+      <Box onClick={onOpen} position="relative">
         <IconButton
           ref={btnRef}
           aria-label="cart"
@@ -58,7 +67,7 @@ export default function Cart() {
           borderColor="initial"
           {...sharedIconButtonProps}
         />
-        {/* <CartCounter /> */}
+        {cart && cart.length > 0 && <CartCounter />}
       </Box>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef} size="md">
         <DrawerOverlay />
