@@ -31,7 +31,6 @@ export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
             src={src}
             alt={title}
             className={styles.image}
-            style={{ objectFit: 'cover' }}
             fill
             sizes="(max-width: 768px) 100vw,
           (max-width: 1200px) 100vw,
