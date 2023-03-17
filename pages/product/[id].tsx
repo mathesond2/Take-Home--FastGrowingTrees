@@ -46,7 +46,7 @@ const detailCardContainerWidth = '20.625rem';
 
 export default function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { alt, body, id, price, src, title } = product;
-  const titleContent = `${title} | Fastest Growing Trees `;
+  const titleContent = `${title} | Fastest Growing Trees`;
   return (
     <>
       <Head>

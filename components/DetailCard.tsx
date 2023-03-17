@@ -14,7 +14,7 @@ export default function DetailCard({
   children,
 }: PropsWithChildren<DetailCardProps>): JSX.Element {
   return (
-    <VStack spsacing={4} alignItems="normal" bgColor="white" p={4} h="fit-content">
+    <VStack spacing={4} alignItems="normal" bgColor="white" p={4} h="fit-content">
       <Text fontSize="4xl" fontWeight={500} lineHeight={10}>
         {title}
       </Text>
