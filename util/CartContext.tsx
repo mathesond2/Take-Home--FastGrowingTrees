@@ -1,17 +1,17 @@
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
 import { ParsedProduct } from '@/types/data';
 
-type ItemState = ParsedProduct | undefined;
+type CartState = ParsedProduct[] | undefined;
 type ContextState = {
-  item: ItemState;
-  setItem: Dispatch<SetStateAction<ItemState>>;
+  cart: CartState;
+  setCart: Dispatch<SetStateAction<CartState>>;
 };
 
 const CartContext = createContext({} as ContextState);
 
 export function CartProvider({ children }: PropsWithChildren) {
-  const [item, setItem] = useState(undefined as ItemState);
-  const value = { item, setItem };
+  const [cart, setCart] = useState(undefined as CartState);
+  const value = { cart, setCart };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 

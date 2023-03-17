@@ -30,7 +30,7 @@ const inlineStyles = {
 export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
-  const { item } = useCart();
+  const { cart } = useCart();
 
   return (
     <>
@@ -59,7 +59,7 @@ export default function Cart() {
           </DrawerHeader>
 
           <DrawerBody>
-            <p>{JSON.stringify(item)}</p>
+            <p>{JSON.stringify(cart)}</p>
           </DrawerBody>
 
           <DrawerFooter>
