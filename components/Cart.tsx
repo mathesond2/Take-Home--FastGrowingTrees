@@ -23,6 +23,7 @@ import { useRef } from 'react';
 import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
 import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
 import CartItem from './CartItem';
+import CartProgressBar from './CartProgressBar';
 
 const primaryGreen = '#155343';
 const inlineStyles = {
@@ -52,7 +53,7 @@ export default function Cart() {
   const cartSubtotal = cart?.reduce((acc, { price }) => acc + price, 0) || 0;
 
   const CartCounter = () => (
-    <Box position="absolute" right="-8px" top="-6px">
+    <Box position="absolute" right={-2} top={-1.5}>
       <Circle size={5} bg={primaryRed} fontSize="xs">
         <Text color="white">{cart?.length}</Text>
       </Circle>
@@ -82,6 +83,7 @@ export default function Cart() {
           </DrawerHeader>
 
           <DrawerBody>
+            <CartProgressBar cartSubtotal={cartSubtotal} />
             {cart?.map(({ id, title, price, src, alt }) => (
               <CartItem
                 key={id}
