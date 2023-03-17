@@ -17,6 +17,7 @@ import {
   Text,
   useDisclosure,
   VStack,
+  Divider,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
@@ -111,6 +112,7 @@ export default function Cart() {
                 <Text fontSize="lg">{formatUSD(cartSubtotal)}</Text>
               </Flex>
             )}
+            <Divider marginY={3} borderColor="#D7DAD2" borderWidth="3px" />
           </DrawerBody>
 
           <DrawerFooter>
