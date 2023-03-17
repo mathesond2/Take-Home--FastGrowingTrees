@@ -29,7 +29,7 @@ const inlineStyles = {
 
 export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
+  const btnRef = useRef(null);
   const { item } = useCart();
 
   return (
@@ -51,7 +51,7 @@ export default function Cart() {
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef} size="md">
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton size="lg" _hover={{ bgColor: 'transparent' }} style={inlineStyles.closeIcon} />
+          <DrawerCloseButton size="lg" _hover={{ bgColor: 'transparent' }} sx={inlineStyles.closeIcon} />
           <DrawerHeader>
             <Center>
               <Icon as={IoCartOutline} boxSize={10} color={primaryGreen} />
