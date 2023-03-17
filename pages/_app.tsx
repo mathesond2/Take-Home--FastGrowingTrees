@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { BlahProvider } from '@/util/BlahContext';
+import { CartProvider } from '@/util/CartContext';
 import { inter } from '@/util/fonts';
 import theme from '@/util/theme';
 import { ChakraProvider } from '@chakra-ui/react';
@@ -17,11 +17,11 @@ export default function App({ Component, pageProps }: AppProps) {
         `}
       </style>
       <ChakraProvider theme={theme}>
-        <BlahProvider>
+        <CartProvider>
           <Layout>
             <Component {...pageProps} />
           </Layout>
-        </BlahProvider>
+        </CartProvider>
       </ChakraProvider>
     </>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useRef } from 'react';
-import { useBlah } from '../util/BlahContext';
+import { useCart } from '../util/CartContext';
 
 type FetchAction = {
   readonly type: 'error' | 'loading' | 'success';
@@ -56,9 +56,9 @@ const fetchEndpoint = async (path: string) => {
   return data;
 };
 
-export function useBlahFetch(path: string): FetchState {
+export function useCartFetch(path: string): FetchState {
   const searchedItemRef = useRef<string | null>(null);
-  const { item } = useBlah();
+  const { item } = useCart();
   const [fetchData, dispatchFetchData] = useReducer(fetchDataReducer, initialFetchData);
   const { data, loading, error } = fetchData;
 

@@ -1,7 +1,8 @@
 import DetailCard from '@/components/DetailCard';
 import ImageWithFallback from '@/components/ImageWithFallback';
+import AddToCartButton from '@/components/AddToCartButton';
 import { ParsedProduct, ParsedProducts } from '@/types/data';
-import { Box, Button, Center, Stack } from '@chakra-ui/react';
+import { Box, Center, Stack } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { NextRequest } from 'next/server';
@@ -77,9 +78,7 @@ export default function ProductPage({ product }: InferGetStaticPropsType<typeof 
             </Box>
             <Box w={['100%', null, '100%', detailCardContainerWidth]}>
               <DetailCard title={title} subtitle="About" body={body}>
-                <Button bgColor="#CD0100" color="white" size="lg">
-                  Add to Cart
-                </Button>
+                <AddToCartButton product={product} />
               </DetailCard>
             </Box>
           </Stack>

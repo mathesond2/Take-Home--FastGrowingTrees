@@ -1,8 +1,7 @@
+import { useCart } from '@/util/CartContext';
 import {
-  Center,
   Box,
-  Icon,
-  IconButton,
+  Center,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -10,10 +9,12 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
+  Icon,
+  IconButton,
   useDisclosure,
 } from '@chakra-ui/react';
-import { IoCart, IoCartOutline } from 'react-icons/io5';
 import { useRef } from 'react';
+import { IoCart, IoCartOutline } from 'react-icons/io5';
 
 const primaryGreen = '#155343';
 const inlineStyles = {
@@ -29,6 +30,7 @@ const inlineStyles = {
 export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const { item } = useCart();
 
   return (
     <>
@@ -56,7 +58,9 @@ export default function Cart() {
             </Center>
           </DrawerHeader>
 
-          <DrawerBody></DrawerBody>
+          <DrawerBody>
+            <p>{JSON.stringify(item)}</p>
+          </DrawerBody>
 
           <DrawerFooter>
             <p>footer</p>
