@@ -93,7 +93,19 @@ export default function Cart() {
                     <Text>{formatUSD(price)}</Text>
                     <HStack>
                       <IconButton
-                        onClick={() => {}}
+                        onClick={() => {
+                          const numItems = cart?.filter((item) => item.id === id).length || 0;
+                          if (numItems > 1) {
+                            const itemIndex = cart.findIndex((item) => item.id === id);
+                            if (itemIndex > -1) {
+                              setCart((prev) => {
+                                const newCart = [...prev];
+                                newCart.splice(itemIndex, 1);
+                                return newCart;
+                              });
+                            }
+                          }
+                        }}
                         aria-label={`decrease item quantity by one (${title})`}
                         icon={<Icon as={HiOutlineMinusSm} boxSize={5} color="black" />}
                         borderColor="black"
@@ -105,7 +117,12 @@ export default function Cart() {
                         1
                       </Text>
                       <IconButton
-                        onClick={() => {}}
+                        onClick={() => {
+                          const foundItem = cart?.find((item) => item.id === id);
+                          if (foundItem) {
+                            setCart((prev) => [...prev, foundItem]);
+                          }
+                        }}
                         aria-label={`increase item quantity by one (${title})`}
                         icon={<Icon as={HiOutlinePlusSm} boxSize={5} color="black" />}
                         borderColor="black"
