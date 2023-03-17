@@ -8,7 +8,6 @@ import {
   DrawerBody,
   DrawerCloseButton,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerOverlay,
   Flex,
@@ -17,10 +16,12 @@ import {
   Text,
   useDisclosure,
   VStack,
+  HStack,
   Divider,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
+import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
 import CartItem from './CartItem';
 
 const primaryGreen = '#155343';
@@ -90,6 +91,29 @@ export default function Cart() {
                   <VStack spacing={4} alignItems="normal" ml={5}>
                     <Text fontWeight={500}>{title}</Text>
                     <Text>{formatUSD(price)}</Text>
+                    <HStack>
+                      <IconButton
+                        onClick={() => {}}
+                        aria-label={`decrease item quantity by one (${title})`}
+                        icon={<Icon as={HiOutlineMinusSm} boxSize={5} color="black" />}
+                        borderColor="black"
+                        size="xs"
+                        {...sharedIconButtonProps}
+                        borderWidth={2}
+                      />
+                      <Text fontSize="lg" fontWeight={500} paddingX={3}>
+                        1
+                      </Text>
+                      <IconButton
+                        onClick={() => {}}
+                        aria-label={`increase item quantity by one (${title})`}
+                        icon={<Icon as={HiOutlinePlusSm} boxSize={5} color="black" />}
+                        borderColor="black"
+                        size="xs"
+                        {...sharedIconButtonProps}
+                        borderWidth={2}
+                      />
+                    </HStack>
                   </VStack>
                 }
               >
@@ -113,11 +137,10 @@ export default function Cart() {
               </Flex>
             )}
             <Divider marginY={3} borderColor="#D7DAD2" borderWidth="3px" />
+            <Text fontSize="xl" fontWeight={500}>
+              Recommended Items
+            </Text>
           </DrawerBody>
-
-          <DrawerFooter>
-            <Text>footer</Text>
-          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>
