@@ -12,7 +12,7 @@ describe('/api/product/[id]', () => {
     return req;
   }
 
-  test('returns a succesful response with a product', async () => {
+  test('returns a 200 response with a product', async () => {
     const givenID = '1532751740980';
     const req = createMockRequest(givenID);
     const res = handler(req);

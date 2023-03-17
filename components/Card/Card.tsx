@@ -3,7 +3,6 @@ import ImageWithFallback from '../ImageWithFallback';
 import styles from './Card.module.css';
 
 const imgHeight = '15.75rem';
-// const imgWidth = '17.5rem';
 const imgWidth = '100%';
 const textMaxWidth = '8.625rem';
 
@@ -32,9 +31,7 @@ export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
             alt={title}
             className={styles.image}
             fill
-            sizes="(max-width: 768px) 100vw,
-          (max-width: 1200px) 100vw,
-          100vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
             fallbackSrc="https://via.placeholder.com/280x252.png?text=?"
           />
         </Box>

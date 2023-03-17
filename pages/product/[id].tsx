@@ -33,6 +33,12 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   const res = productHandler(nextReq);
   const data: ParsedProduct = await res.json();
 
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
   return {
     props: { product: data },
   };
