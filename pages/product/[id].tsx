@@ -1,7 +1,7 @@
 import DetailCard from '@/components/DetailCard';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { ParsedProduct, ParsedProducts } from '@/types/data';
-import { Box, Button, Center, HStack } from '@chakra-ui/react';
+import { Box, Button, Center, Stack } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { NextRequest } from 'next/server';
@@ -38,8 +38,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
   };
 };
 
-const imgHeight = '554px';
-const imgWidth = '557px';
+const imgHeight = '34.625rem';
+const imgWidth = '34.75rem';
+const imgFallbackHeight = '554';
+const imgFallbackWidth = '556';
+const detailCardContainerWidth = '20.625rem';
 
 export default function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { alt, body, id, price, src, title } = product;
@@ -54,24 +57,26 @@ export default function ProductPage({ product }: InferGetStaticPropsType<typeof 
       </Head>
       <main>
         <Center>
-          <HStack spacing={4} alignItems="initial">
-            <Box position={'relative'} h={imgHeight} w={imgWidth} borderTopRadius="lg">
+          <Stack spacing={4} direction={['column', 'column', 'row', 'row']}>
+            <Box position={'relative'} h={imgHeight} w={['100%', null, '100%', imgWidth]} borderTopRadius="lg">
               <ImageWithFallback
                 src={src}
                 alt={alt || title}
                 fill
-                sizes="(max-width: 768px) 200px,
-                (max-width: 1200px) 200px,
-                200px"
-                fallbackSrc="https://via.placeholder.com/280x252.png?text=?"
+                sizes={`(max-width: 768px) ${imgWidth},
+                (max-width: 1200px) ${imgWidth},
+                ${imgWidth}`}
+                fallbackSrc={`https://via.placeholder.com/${imgFallbackWidth}x${imgFallbackHeight}.png?text=?`}
               />
             </Box>
-            <DetailCard title={title} body={body}>
-              <Button bgColor="#CD0100" color="white" size="lg">
-                Add to Cart
-              </Button>
-            </DetailCard>
-          </HStack>
+            <Box w={['100%', null, '100%', detailCardContainerWidth]}>
+              <DetailCard title={title} subtitle="About" body={body}>
+                <Button bgColor="#CD0100" color="white" size="lg">
+                  Add to Cart
+                </Button>
+              </DetailCard>
+            </Box>
+          </Stack>
         </Center>
       </main>
     </>

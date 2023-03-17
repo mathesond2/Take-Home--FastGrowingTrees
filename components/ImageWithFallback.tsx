@@ -13,6 +13,7 @@ export default function ImageWithFallback(props: ImageWithFallbackProps) {
     <Image
       {...rest}
       src={imgSrc}
+      style={{ objectFit: 'cover' }}
       alt={alt}
       onError={() => {
         setImgSrc(fallbackSrc);
