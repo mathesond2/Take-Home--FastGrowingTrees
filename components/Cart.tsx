@@ -4,6 +4,7 @@ import {
   Box,
   Center,
   Circle,
+  Divider,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -11,17 +12,16 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  HStack,
   Icon,
   IconButton,
   Text,
   useDisclosure,
   VStack,
-  HStack,
-  Divider,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
-import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
 import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
+import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
 import CartItem from './CartItem';
 import CartProgressBar from './CartProgressBar';
 
@@ -101,7 +101,7 @@ export default function Cart() {
                             const itemIndex = cart.findIndex((item) => item.id === id);
                             if (itemIndex > -1) {
                               setCart((prev) => {
-                                const newCart = [...prev];
+                                const newCart = prev?.length ? [...prev] : [];
                                 newCart.splice(itemIndex, 1);
                                 return newCart;
                               });
@@ -122,7 +122,7 @@ export default function Cart() {
                         onClick={() => {
                           const foundItem = cart?.find((item) => item.id === id);
                           if (foundItem) {
-                            setCart((prev) => [...prev, foundItem]);
+                            setCart((prev) => prev && [...prev, foundItem]);
                           }
                         }}
                         aria-label={`increase item quantity by one (${title})`}
