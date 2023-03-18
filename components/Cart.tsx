@@ -12,17 +12,15 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
-  HStack,
   Icon,
   IconButton,
   Text,
   useDisclosure,
-  VStack,
 } from '@chakra-ui/react';
 import { useRef } from 'react';
-import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
 import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
 import CartItem from './CartItem';
+import CartItemIncrementor from './CartItemIncrementor';
 import CartProgressBar from './CartProgressBar';
 
 const primaryGreen = '#155343';
@@ -36,7 +34,7 @@ const inlineStyles = {
   },
 };
 
-const sharedIconButtonProps = {
+const iconButtonProps = {
   bgColor: 'transparent',
   borderStyle: 'solid',
   borderWidth: 3,
@@ -68,7 +66,7 @@ export default function Cart() {
           aria-label="cart"
           icon={<Icon as={IoCart} boxSize={6} />}
           borderColor="initial"
-          {...sharedIconButtonProps}
+          {...iconButtonProps}
         />
         {cart && cart.length > 0 && <CartCounter />}
       </Box>
@@ -84,69 +82,51 @@ export default function Cart() {
 
           <DrawerBody>
             <CartProgressBar cartSubtotal={cartSubtotal} />
-            {cart?.map(({ id, title, price, src, alt }) => (
-              <CartItem
-                key={id}
-                src={src}
-                alt={alt || title}
-                midSection={
-                  <VStack spacing={4} alignItems="normal" ml={5}>
-                    <Text fontWeight={500}>{title}</Text>
-                    <Text>{formatUSD(price)}</Text>
-                    <HStack>
-                      <IconButton
-                        onClick={() => {
-                          const numItems = cart?.filter((item) => item.id === id).length || 0;
-                          if (numItems > 1) {
-                            const itemIndex = cart.findIndex((item) => item.id === id);
-                            if (itemIndex > -1) {
-                              setCart((prev) => {
-                                const newCart = prev?.length ? [...prev] : [];
-                                newCart.splice(itemIndex, 1);
-                                return newCart;
-                              });
-                            }
+            {cart?.map(({ id, title, price, src, alt }) => {
+              const itemQuantity = cart?.filter((item) => item.id === id).length || 0;
+              return (
+                <CartItem
+                  key={id}
+                  src={src}
+                  alt={alt || title}
+                  midSection={
+                    <CartItemIncrementor
+                      title={title}
+                      price={price}
+                      quantity={itemQuantity}
+                      onClickLeft={() => {
+                        if (itemQuantity > 1) {
+                          const itemIndex = cart.findIndex((item) => item.id === id);
+                          if (itemIndex > -1) {
+                            setCart((prev) => {
+                              const newCart = prev?.length ? [...prev] : [];
+                              newCart.splice(itemIndex, 1);
+                              return newCart;
+                            });
                           }
-                        }}
-                        aria-label={`decrease item quantity by one (${title})`}
-                        icon={<Icon as={HiOutlineMinusSm} boxSize={5} color="black" />}
-                        borderColor="black"
-                        size="xs"
-                        {...sharedIconButtonProps}
-                        borderWidth={2}
-                      />
-                      <Text fontSize="lg" fontWeight={500} paddingX={3}>
-                        1
-                      </Text>
-                      <IconButton
-                        onClick={() => {
-                          const foundItem = cart?.find((item) => item.id === id);
-                          if (foundItem) {
-                            setCart((prev) => prev && [...prev, foundItem]);
-                          }
-                        }}
-                        aria-label={`increase item quantity by one (${title})`}
-                        icon={<Icon as={HiOutlinePlusSm} boxSize={5} color="black" />}
-                        borderColor="black"
-                        size="xs"
-                        {...sharedIconButtonProps}
-                        borderWidth={2}
-                      />
-                    </HStack>
-                  </VStack>
-                }
-              >
-                <IconButton
-                  onClick={() => {
-                    setCart((prev) => prev?.filter((item) => item.id !== id));
-                  }}
-                  aria-label="remove from cart"
-                  icon={<Icon as={IoTrash} boxSize={6} color={primaryRed} />}
-                  borderColor={primaryRed}
-                  {...sharedIconButtonProps}
-                />
-              </CartItem>
-            ))}
+                        }
+                      }}
+                      onClickRight={() => {
+                        const foundItem = cart?.find((item) => item.id === id);
+                        if (foundItem) {
+                          setCart((prev) => prev && [...prev, foundItem]);
+                        }
+                      }}
+                    />
+                  }
+                >
+                  <IconButton
+                    onClick={() => {
+                      setCart((prev) => prev?.filter((item) => item.id !== id));
+                    }}
+                    aria-label="remove from cart"
+                    icon={<Icon as={IoTrash} boxSize={6} color={primaryRed} />}
+                    borderColor={primaryRed}
+                    {...iconButtonProps}
+                  />
+                </CartItem>
+              );
+            })}
             {cartSubtotal > 0 && (
               <Flex mt={4} justifyContent="space-between">
                 <Text fontSize="lg" fontWeight={500}>

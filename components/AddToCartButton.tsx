@@ -8,6 +8,7 @@ export default function AddToCartButton({ product }: { product: ParsedProduct })
   return (
     <Button
       bgColor={primaryRed}
+      _hover={{ bgColor: primaryRed }}
       color="white"
       size="lg"
       onClick={() => {
