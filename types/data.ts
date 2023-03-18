@@ -5,7 +5,7 @@ export type RawData = {
 
 type OverviewProduct = Pick<Product, 'id' | 'title'>;
 type OverviewThumbnail = Pick<Thumbnail, 'src'>;
-type ProductOverview = OverviewProduct & OverviewThumbnail;
+export type ProductOverview = OverviewProduct & OverviewThumbnail;
 
 export type ParsedProducts = {
   products: ProductOverview[];
