@@ -146,7 +146,11 @@ export default function Cart() {
               </Flex>
             )}
             <Divider marginY={3} borderColor={dividerGray} borderWidth={4} />
-            <RecommendedItems />
+            <RecommendedItems
+              onClick={() => {
+                console.log('clicked recommended item');
+              }}
+            />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
