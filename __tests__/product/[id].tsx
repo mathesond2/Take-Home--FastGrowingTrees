@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import ProductPage from '../../product/[id]';
+import ProductPage from '../../pages/product/[id]';
 import '@testing-library/jest-dom';
 
 const product = {
