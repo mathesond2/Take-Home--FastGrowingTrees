@@ -20,6 +20,7 @@ export default function CartProgressBar({ cartSubtotal }: { cartSubtotal: number
         <Text fontSize="sm" textAlign="center">
           You qualify for free shipping!
         </Text>
+        <Progress colorScheme="green" height={2.5} value={percentageToFreeShipping} />
       </VStack>
     );
 

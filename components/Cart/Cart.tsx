@@ -48,6 +48,7 @@ export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   const { cart, setCart } = useCart();
+  const uniqueCart = new Set(cart);
   const cartSubtotal = cart?.reduce((acc, { price }) => acc + price, 0) || 0;
 
   const CartCounter = () => (
@@ -82,7 +83,7 @@ export default function Cart() {
 
           <DrawerBody>
             <CartProgressBar cartSubtotal={cartSubtotal} />
-            {cart?.map(({ id, title, price, src, alt }) => {
+            {Array.from(uniqueCart)?.map(({ id, title, price, src, alt }) => {
               const itemQuantity = cart?.filter((item) => item.id === id).length || 0;
               return (
                 <CartItem
