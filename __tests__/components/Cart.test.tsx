@@ -32,28 +32,6 @@ describe('Cart', () => {
     expect(renderedPrice).toHaveLength(2); //both price and subtotal
   });
 
-  it('removes item upon clicking associated button', async () => {
-    const value = {
-      cart: [testProduct],
-      setCart: jest.fn(),
-    };
-
-    render(
-      <CartContext.Provider value={value}>
-        <Cart />
-      </CartContext.Provider>,
-    );
-
-    const cartButton = screen.getByLabelText('cart');
-    expect(cartButton).toBeInTheDocument();
-    fireEvent.click(cartButton);
-
-    const removeIcon = screen.getByLabelText('remove from cart');
-    fireEvent.click(removeIcon);
-
-    expect(value.setCart).toHaveBeenCalled();
-  });
-
   it('updates item quantity and price upon clicking associated buttons', async () => {
     const { title, price } = testProduct;
     render(
@@ -92,5 +70,10 @@ describe('Cart', () => {
     fireEvent.click(decrementButton);
     expect(itemQuantity).toHaveTextContent('1');
     expect(subtotal).toHaveTextContent(formatUSD(price));
+
+    // remove item from cart
+    const removeIcon = screen.getByLabelText('remove from cart');
+    fireEvent.click(removeIcon);
+    expect(itemQuantity).not.toBeInTheDocument();
   });
 });
