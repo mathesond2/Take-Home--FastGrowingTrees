@@ -1,5 +1,5 @@
-import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
 import { ParsedProduct } from '@/types/data';
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
 
 type CartState = ParsedProduct[] | undefined;
 type ContextState = {

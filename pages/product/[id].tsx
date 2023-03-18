@@ -1,6 +1,6 @@
+import AddToCartButton from '@/components/AddToCartButton';
 import DetailCard from '@/components/DetailCard';
 import ImageWithFallback from '@/components/ImageWithFallback';
-import AddToCartButton from '@/components/AddToCartButton';
 import { ParsedProduct, ParsedProducts } from '@/types/data';
 import { Box, Center, Stack } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
