@@ -23,7 +23,9 @@ import CartItem from './CartItem';
 import CartItemIncrementor from './CartItemIncrementor';
 import CartProgressBar from './CartProgressBar';
 
+const dividerGray = '#D7DAD2';
 const primaryGreen = '#155343';
+
 const inlineStyles = {
   closeIcon: {
     position: 'absolute',
@@ -97,7 +99,7 @@ export default function Cart() {
                       quantity={itemQuantity}
                       onClickLeft={() => {
                         if (itemQuantity > 1) {
-                          const itemIndex = cart.findIndex((item) => item.id === id);
+                          const itemIndex = cart!.findIndex((item) => item.id === id);
                           if (itemIndex > -1) {
                             setCart((prev) => {
                               const newCart = prev?.length ? [...prev] : [];
@@ -108,7 +110,7 @@ export default function Cart() {
                         }
                       }}
                       onClickRight={() => {
-                        const foundItem = cart?.find((item) => item.id === id);
+                        const foundItem = cart!.find((item) => item.id === id);
                         if (foundItem) {
                           setCart((prev) => prev && [...prev, foundItem]);
                         }
@@ -136,7 +138,7 @@ export default function Cart() {
                 <Text fontSize="lg">{formatUSD(cartSubtotal)}</Text>
               </Flex>
             )}
-            <Divider marginY={3} borderColor="#D7DAD2" borderWidth="3px" />
+            <Divider marginY={3} borderColor={dividerGray} borderWidth={4} />
             <Text fontSize="xl" fontWeight={500}>
               Recommended Items
             </Text>
