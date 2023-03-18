@@ -1,7 +1,7 @@
 import { formatUSD } from '@/util';
+import { FREE_SHIPPING_THRESHOLD } from '@/util/constants';
 import { Progress, Text, VStack } from '@chakra-ui/react';
 
-const FREE_SHIPPING_THRESHOLD = 150;
 const percentageToFreeShipping = (subtotal: number) => Math.min(subtotal / FREE_SHIPPING_THRESHOLD, 1) * 100;
 export const freeShippingStatusText = 'You qualify for free shipping!';
 export const createShippingStatusText = (subtotal: number) =>

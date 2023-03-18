@@ -9,6 +9,7 @@ import { NextRequest } from 'next/server';
 import { ParsedUrlQuery } from 'querystring';
 import productHandler from '../api/product/[id]';
 import productsHandler from '../api/products';
+import { DEV_URL, PROD_URL } from '@/util/constants';
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -30,7 +31,8 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const { id } = context.params!;
-  const nextReq = new NextRequest(new URL(`http://localhost:3000/api/product?id=${id}}`)); //TODO: fix this
+  const url = process.env.NODE_ENV === 'development' ? DEV_URL : PROD_URL;
+  const nextReq = new NextRequest(new URL(`${url}/api/product?id=${id}}`));
   const res = productHandler(nextReq);
   const data: ParsedProduct = await res.json();
 
