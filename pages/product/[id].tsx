@@ -2,6 +2,7 @@ import AddToCartButton from '@/components/AddToCartButton';
 import DetailCard from '@/components/DetailCard';
 import ImageWithFallback from '@/components/ImageWithFallback';
 import { ParsedProduct, ParsedProducts } from '@/types/data';
+import { DEV_URL, PROD_URL } from '@/util/constants';
 import { Box, Center, Stack } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
@@ -9,7 +10,6 @@ import { NextRequest } from 'next/server';
 import { ParsedUrlQuery } from 'querystring';
 import productHandler from '../api/product/[id]';
 import productsHandler from '../api/products';
-import { DEV_URL, PROD_URL } from '@/util/constants';
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -54,7 +54,7 @@ const imgFallbackWidth = '556';
 const detailCardContainerWidth = '20.625rem';
 
 export default function ProductPage({ product }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { alt, body, id, price, src, title } = product;
+  const { alt, body, src, title } = product;
   const titleContent = `${title} | Fastest Growing Trees`;
   return (
     <>

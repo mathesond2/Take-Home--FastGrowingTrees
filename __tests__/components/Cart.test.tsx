@@ -1,9 +1,9 @@
+import { createShippingStatusText, freeShippingStatusText } from '@/components/Cart/CartProgressBar';
 import { CartContext, CartProvider } from '@/util/CartContext';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Cart from '../../components/Cart/Cart';
 import ProductPage from '../../pages/product/[id]';
-import { createShippingStatusText, freeShippingStatusText } from '@/components/Cart/CartProgressBar';
 import { formatUSD, testProduct } from '../../util';
 
 describe('Cart', () => {

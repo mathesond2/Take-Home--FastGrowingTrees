@@ -25,14 +25,13 @@ export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
     >
       <CardBody p="0" overflow="hidden">
         <Box position={'relative'} h={imgHeight} w={imgWidth} borderTopRadius="lg">
-          {/* NOTE: tweak 'sizes' further as design develops, and consider generating solid color blurred images within getStaticProps */}
           <ImageWithFallback
             src={src}
             alt={title}
             className={styles.image}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
-            fallbackSrc="https://via.placeholder.com/280x252.png?text=?"
+            fallbackSrc="https://via.placeholder.com/600x600.png?text=?"
           />
         </Box>
       </CardBody>
