@@ -2,7 +2,7 @@ import { Flex } from '@chakra-ui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import iconSVG from '../public/icon.svg';
-import Cart from './Cart';
+import Cart from './Cart/Cart';
 
 export default function Navbar() {
   return (
