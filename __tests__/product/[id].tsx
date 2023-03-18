@@ -1,6 +1,9 @@
-import { render, screen } from '@testing-library/react';
-import ProductPage from '../../pages/product/[id]';
+import { CartProvider } from '@/util/CartContext';
 import '@testing-library/jest-dom';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { cartCounterId } from '../../components/Cart/Cart';
+import Navbar from '../../components/Navbar';
+import ProductPage from '../../pages/product/[id]';
 
 const product = {
   id: 4813305610302,
@@ -28,5 +31,23 @@ describe('Product page', () => {
 
     const button = screen.getByRole('button', { name: /add to cart/i });
     expect(button).toBeInTheDocument();
+  });
+
+  it('updates ticker quantity upon clicking button', async () => {
+    render(
+      <CartProvider>
+        <Navbar />
+        <ProductPage product={product} />
+      </CartProvider>,
+    );
+    const button = screen.getByRole('button', { name: /add to cart/i });
+
+    fireEvent.click(button);
+    let cartCounter = await screen.findByTestId(cartCounterId);
+    expect(cartCounter).toHaveTextContent('1');
+
+    fireEvent.click(button);
+    cartCounter = await screen.findByTestId(cartCounterId);
+    expect(cartCounter).toHaveTextContent('2');
   });
 });

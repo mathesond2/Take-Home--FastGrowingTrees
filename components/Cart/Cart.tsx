@@ -46,6 +46,8 @@ const iconButtonProps = {
   isRound: true,
 };
 
+export const cartCounterId = 'cart-counter';
+
 export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
@@ -56,7 +58,9 @@ export default function Cart() {
   const CartCounter = () => (
     <Box position="absolute" right={-2} top={-1.5}>
       <Circle size={5} bg={primaryRed} fontSize="xs">
-        <Text color="white">{cart?.length}</Text>
+        <Text color="white" data-testid={cartCounterId}>
+          {cart?.length}
+        </Text>
       </Circle>
     </Box>
   );
