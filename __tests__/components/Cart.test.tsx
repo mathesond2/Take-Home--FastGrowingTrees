@@ -3,6 +3,7 @@ import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Cart from '../../components/Cart/Cart';
 import ProductPage from '../../pages/product/[id]';
+import { createShippingStatusText, freeShippingStatusText } from '@/components/Cart/CartProgressBar';
 import { formatUSD, testProduct } from '../../util';
 
 describe('Cart', () => {
@@ -75,5 +76,57 @@ describe('Cart', () => {
     const removeIcon = screen.getByLabelText('remove from cart');
     fireEvent.click(removeIcon);
     expect(itemQuantity).not.toBeInTheDocument();
+  });
+
+  it('updates "free shipping" status upon clicking associated buttons', async () => {
+    const { title, price } = testProduct;
+    render(
+      <CartProvider>
+        <Cart />
+        <ProductPage product={testProduct} />
+      </CartProvider>,
+    );
+
+    // add product to cart
+    const button = screen.getByRole('button', { name: /add to cart/i });
+    fireEvent.click(button);
+
+    // open cart
+    const cartButton = screen.getByLabelText('cart');
+    fireEvent.click(cartButton);
+
+    const incrementButton = await screen.getByLabelText(`increase quantity by one (${title})`);
+    const decrementButton = await screen.getByLabelText(`decrease quantity by one (${title})`);
+
+    // check free shipping status
+    let shippingStatus = createShippingStatusText(price);
+    let shippingStatusText = await screen.findByText(shippingStatus);
+    expect(shippingStatusText).toBeInTheDocument();
+
+    // increase quantity
+    fireEvent.click(incrementButton);
+
+    // check free shipping status
+    shippingStatus = createShippingStatusText(price * 2);
+    shippingStatusText = await screen.findByText(shippingStatus);
+    expect(shippingStatusText).toBeInTheDocument();
+
+    // update quantity by 9 to trigger free shipping
+    for (let i = 0; i < 9; i++) {
+      fireEvent.click(incrementButton);
+    }
+
+    // check free shipping status
+    shippingStatus = freeShippingStatusText;
+    shippingStatusText = await screen.findByText(shippingStatus);
+    expect(shippingStatusText).toBeInTheDocument();
+
+    // decrease quantity
+    fireEvent.click(decrementButton);
+
+    // check free shipping status
+    shippingStatus = createShippingStatusText(price * 10);
+    shippingStatusText = await screen.findByText(shippingStatus);
+    expect(shippingStatusText).toBeInTheDocument();
   });
 });

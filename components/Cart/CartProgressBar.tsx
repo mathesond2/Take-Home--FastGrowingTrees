@@ -1,18 +1,21 @@
 import { formatUSD } from '@/util';
 import { Progress, Text, VStack } from '@chakra-ui/react';
 
-export default function CartProgressBar({ cartSubtotal }: { cartSubtotal: number }) {
-  const FREE_SHIPPING_THRESHOLD = 150;
-  const percentageToFreeShipping = Math.min(cartSubtotal / FREE_SHIPPING_THRESHOLD, 1) * 100;
+const FREE_SHIPPING_THRESHOLD = 150;
+const percentageToFreeShipping = (subtotal: number) => Math.min(subtotal / FREE_SHIPPING_THRESHOLD, 1) * 100;
+export const freeShippingStatusText = 'You qualify for free shipping!';
+export const createShippingStatusText = (subtotal: number) =>
+  `You're ${formatUSD(FREE_SHIPPING_THRESHOLD - subtotal)} away from free shipping`;
 
+export default function CartProgressBar({ cartSubtotal }: { cartSubtotal: number }) {
   const getText = () => {
     if (!cartSubtotal) {
       return `Free shipping on orders over ${formatUSD(FREE_SHIPPING_THRESHOLD)}`;
     }
     if (cartSubtotal >= FREE_SHIPPING_THRESHOLD) {
-      return 'You qualify for free shipping!';
+      return freeShippingStatusText;
     }
-    return `You're ${formatUSD(FREE_SHIPPING_THRESHOLD - cartSubtotal)} away from free shipping`;
+    return createShippingStatusText(cartSubtotal);
   };
 
   return (
@@ -20,7 +23,7 @@ export default function CartProgressBar({ cartSubtotal }: { cartSubtotal: number
       <Text fontSize="sm" textAlign="center">
         {getText()}
       </Text>
-      {cartSubtotal && <Progress colorScheme="green" height={2.5} value={percentageToFreeShipping} />}
+      {cartSubtotal && <Progress colorScheme="green" height={2.5} value={percentageToFreeShipping(cartSubtotal)} />}
     </VStack>
   );
 }
