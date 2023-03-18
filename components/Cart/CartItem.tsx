@@ -1,9 +1,9 @@
-import { Center, Flex } from '@chakra-ui/react';
+import { Box, Center, Flex } from '@chakra-ui/react';
 import Image from 'next/image';
 import { PropsWithChildren } from 'react';
 
 const thumbnailSize = '110';
-
+const maxWidth = '12.75rem';
 type CartItemProps = {
   src: string;
   alt: string;
@@ -14,7 +14,7 @@ export default function CartItem({ src, alt, midSection, children }: PropsWithCh
   return (
     <Flex mb={4}>
       <Image src={src} alt={alt} width={thumbnailSize} height={thumbnailSize} />
-      {midSection}
+      <Box maxWidth={maxWidth}>{midSection}</Box>
       <Center ml="auto">{children}</Center>
     </Flex>
   );

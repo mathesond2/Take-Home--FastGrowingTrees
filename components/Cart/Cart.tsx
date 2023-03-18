@@ -22,6 +22,7 @@ import { IoCart, IoCartOutline, IoTrash } from 'react-icons/io5';
 import CartItem from './CartItem';
 import CartItemIncrementor from './CartItemIncrementor';
 import CartProgressBar from './CartProgressBar';
+import RecommendedItems from './RecommendedItems';
 
 const dividerGray = '#D7DAD2';
 const primaryGreen = '#155343';
@@ -145,9 +146,7 @@ export default function Cart() {
               </Flex>
             )}
             <Divider marginY={3} borderColor={dividerGray} borderWidth={4} />
-            <Text fontSize="xl" fontWeight={500}>
-              Recommended Items
-            </Text>
+            <RecommendedItems />
           </DrawerBody>
         </DrawerContent>
       </Drawer>
