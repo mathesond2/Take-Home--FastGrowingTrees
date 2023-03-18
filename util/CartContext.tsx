@@ -7,7 +7,7 @@ type ContextState = {
   setCart: Dispatch<SetStateAction<CartState>>;
 };
 
-const CartContext = createContext({} as ContextState);
+export const CartContext = createContext({} as ContextState);
 
 export function CartProvider({ children }: PropsWithChildren) {
   const [cart, setCart] = useState(undefined as CartState);

@@ -45,7 +45,7 @@ export default function CartItemIncrementor({
           icon={<Icon as={HiOutlineMinusSm} {...iconProps} />}
           {...iconButtonProps}
         />
-        <Text fontSize="lg" fontWeight={500} paddingX={3}>
+        <Text fontSize="lg" fontWeight={500} paddingX={3} data-testid={`quantity of ${title.toLowerCase()}`}>
           {quantity}
         </Text>
         <IconButton

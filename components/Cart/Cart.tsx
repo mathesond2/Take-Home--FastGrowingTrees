@@ -139,7 +139,9 @@ export default function Cart() {
                 <Text fontSize="lg" fontWeight={500}>
                   Subtotal
                 </Text>
-                <Text fontSize="lg">{formatUSD(cartSubtotal)}</Text>
+                <Text fontSize="lg" data-testid="subtotal">
+                  {formatUSD(cartSubtotal)}
+                </Text>
               </Flex>
             )}
             <Divider marginY={3} borderColor={dividerGray} borderWidth={4} />
