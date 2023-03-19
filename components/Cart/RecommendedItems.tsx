@@ -1,4 +1,5 @@
 import { useRecommendations } from '@/hooks/useRecommendations';
+import { useCart } from '@/util/CartContext';
 import { Icon, IconButton, Text, Flex } from '@chakra-ui/react';
 import { HiOutlinePlusSm } from 'react-icons/hi';
 import CartItem from './CartItem';
@@ -8,10 +9,11 @@ type RecommendedItemsProps = {
 };
 
 export default function RecommendedItems({ onClick }: RecommendedItemsProps) {
-  const { loading, error, data } = useRecommendations();
+  const { parsedRecommendations } = useCart();
+  // const { loading, error, data } = useRecommendations();
 
-  if (loading) return <Text>Loading...</Text>;
-  if (error) return <Text>{JSON.stringify(error)}</Text>;
+  // if (loading) return <Text>Loading...</Text>;
+  // if (error) return <Text>{JSON.stringify(error)}</Text>;
 
   return (
     <>
@@ -19,7 +21,11 @@ export default function RecommendedItems({ onClick }: RecommendedItemsProps) {
         Recommended Items
       </Text>
 
-      {data?.map(({ id, title, src }) => (
+      {parsedRecommendations?.map(({ title }) => (
+        <Text key={title}>{title}</Text>
+      ))}
+
+      {/* {data?.map(({ id, title, src }) => (
         <CartItem
           key={id}
           src={src}
@@ -47,7 +53,7 @@ export default function RecommendedItems({ onClick }: RecommendedItemsProps) {
             size="md"
           />
         </CartItem>
-      ))}
+      ))} */}
     </>
   );
 }
