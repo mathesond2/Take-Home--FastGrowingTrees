@@ -10,12 +10,14 @@ export default function RecommendedItems() {
   if (loading) return <Text>Loading...</Text>;
   if (error) return null;
 
+  if (!data?.length) return null;
+
   return (
     <>
       <Text fontSize="xl" fontWeight={500} mb={3}>
         Recommended Items
       </Text>
-      {data?.map((product) => {
+      {data.map((product) => {
         const { id, title, src } = product;
         return (
           <CartItem
