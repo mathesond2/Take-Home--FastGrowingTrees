@@ -29,7 +29,7 @@ function filterRecommendations(recommendations: ParsedProduct[], cart: CartState
 
   let filteredRecommendations = prunerInCart ? recommendationsWithoutPruner : recommendations;
   filteredRecommendations =
-    treeQuantityInCart === treePlantingKitQuantityInCart && treeQuantityInCart > 0
+    treeQuantityInCart <= treePlantingKitQuantityInCart && treeQuantityInCart > 0
       ? recommendationsWithoutTreePlantingKit
       : filteredRecommendations;
 
