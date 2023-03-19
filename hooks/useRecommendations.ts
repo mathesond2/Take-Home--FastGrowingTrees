@@ -6,19 +6,19 @@ type FetchAction = {
   readonly data?: ParsedProduct[] | null;
 };
 
-export type FetchState = {
+export type RecommendationsFetchState = {
   error: boolean;
   loading: boolean;
   data: ParsedProduct[] | null;
 };
 
-const initialFetchData: FetchState = {
+const initialFetchData: RecommendationsFetchState = {
   error: false,
   loading: false,
   data: null,
 };
 
-const fetchDataReducer = (state: FetchState, action: FetchAction): FetchState => {
+const fetchDataReducer = (state: RecommendationsFetchState, action: FetchAction): RecommendationsFetchState => {
   switch (action.type) {
     case 'error':
       return {
@@ -50,7 +50,7 @@ const fetchEndpoint = async (apiEndpoint: string) => {
   return data;
 };
 
-export function useRecommendations(): FetchState {
+export function useRecommendations(): RecommendationsFetchState {
   const [fetchData, dispatchFetchData] = useReducer(fetchDataReducer, initialFetchData);
   const { data, loading, error } = fetchData;
 

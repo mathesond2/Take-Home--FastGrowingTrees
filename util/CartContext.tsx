@@ -1,4 +1,4 @@
-import { useRecommendations } from '@/hooks/useRecommendations';
+import { RecommendationsFetchState, useRecommendations } from '@/hooks/useRecommendations';
 import { ParsedProduct } from '@/types/data';
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
 import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from './constants';
@@ -7,15 +7,15 @@ type CartState = ParsedProduct[] | undefined;
 type ContextState = {
   cart: CartState;
   setCart: Dispatch<SetStateAction<CartState>>;
-  recommendations: ParsedProduct[] | null;
+  recommendationData: RecommendationsFetchState;
 };
 
 export const CartContext = createContext({} as ContextState);
 
 export function CartProvider({ children }: PropsWithChildren) {
-  const { loading, error, data: recommendations } = useRecommendations();
+  const recommendationData = useRecommendations();
   const [cart, setCart] = useState(undefined as CartState);
-  const value = { cart, setCart, recommendations };
+  const value = { cart, setCart, recommendationData };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
@@ -43,7 +43,8 @@ export function useCart() {
     throw new Error('useCart must be used within a CartProvider');
   }
 
-  const { cart, setCart, recommendations } = context;
+  const { cart, setCart, recommendationData } = context;
+  const { data: recommendations } = recommendationData;
   const parsedRecommendations = recommendations ? filterRecommendations(recommendations, cart) : null;
   return { cart, setCart, parsedRecommendations };
 }
