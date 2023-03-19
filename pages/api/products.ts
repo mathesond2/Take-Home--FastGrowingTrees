@@ -1,7 +1,7 @@
-import { ParsedProducts, Product, RawData } from '@/types/data';
+import { ProductOverview, Product, RawData } from '@/types/data';
 import data from '../../data.json';
 
-function parseProductsData(data: RawData): ParsedProducts {
+function parseProductsData(data: RawData): ProductOverview[] {
   function parseData(data: Product[]) {
     return data.map(({ id, title, thumbnail }) => {
       const { src } = thumbnail;

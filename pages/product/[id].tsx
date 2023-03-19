@@ -1,7 +1,7 @@
 import AddToCartButton from '@/components/AddToCartButton';
 import DetailCard from '@/components/DetailCard';
 import ImageWithFallback from '@/components/ImageWithFallback';
-import { ParsedProduct, ParsedProducts } from '@/types/data';
+import { ParsedProduct, ProductOverview } from '@/types/data';
 import { DEV_URL, PROD_URL } from '@/util/constants';
 import { Box, Center, Stack } from '@chakra-ui/react';
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next';
@@ -17,7 +17,7 @@ interface Params extends ParsedUrlQuery {
 
 export const getStaticPaths: GetStaticPaths<Params> = async () => {
   const res = productsHandler();
-  const data: ParsedProducts = await res.json();
+  const data: ProductOverview[] = await res.json();
 
   const paths = data.map(({ id }) => ({
     params: { id: id.toString() },
