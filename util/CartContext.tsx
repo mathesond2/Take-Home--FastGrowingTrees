@@ -46,5 +46,14 @@ export function useCart() {
   const { cart, setCart, recommendationData } = context;
   const { data: recommendations } = recommendationData;
   const parsedRecommendations = recommendations ? filterRecommendations(recommendations, cart) : null;
-  return { cart, setCart, parsedRecommendations };
+
+  return {
+    cart,
+    setCart,
+    recommendationData: {
+      data: parsedRecommendations,
+      loading: recommendationData.loading,
+      error: recommendationData.error,
+    },
+  };
 }
