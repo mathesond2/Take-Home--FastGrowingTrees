@@ -1,15 +1,15 @@
-import { ProductOverview } from '@/types/data';
+import { ParsedProduct } from '@/types/data';
 import { useEffect, useReducer } from 'react';
 
 type FetchAction = {
   readonly type: 'error' | 'loading' | 'success';
-  readonly data?: ProductOverview[] | null;
+  readonly data?: ParsedProduct[] | null;
 };
 
 export type FetchState = {
   error: boolean;
   loading: boolean;
-  data: ProductOverview[] | null;
+  data: ParsedProduct[] | null;
 };
 
 const initialFetchData: FetchState = {
@@ -58,13 +58,13 @@ export function useRecommendations(): FetchState {
     const fetchData = async () => {
       dispatchFetchData({ type: 'loading' });
       try {
-        const res = await fetchEndpoint('/api/products');
+        const res = await fetchEndpoint('/api/recommendations');
         console.log('res', res);
 
-        if (res.recommendations) {
+        if (res) {
           dispatchFetchData({
             type: 'success',
-            data: res.recommendations,
+            data: res,
           });
         } else {
           dispatchFetchData({ type: 'error' });
