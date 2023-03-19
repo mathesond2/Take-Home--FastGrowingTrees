@@ -1,9 +1,10 @@
 import { CartProvider } from '@/util/CartContext';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import Cart, { cartCounterId } from '../../components/Cart/Cart';
+import Cart from '../../components/Cart/Cart';
 import ProductPage from '../../pages/product/[id]';
 import { testProduct } from '../../util';
+import { CART_COUNTER_ID } from '../../util/constants';
 
 describe('Product page', () => {
   it('renders page with elements', () => {
@@ -33,11 +34,11 @@ describe('Product page', () => {
     const button = screen.getByRole('button', { name: /add to cart/i });
 
     fireEvent.click(button);
-    let cartCounter = await screen.findByTestId(cartCounterId);
+    let cartCounter = await screen.findByTestId(CART_COUNTER_ID);
     expect(cartCounter).toHaveTextContent('1');
 
     fireEvent.click(button);
-    cartCounter = await screen.findByTestId(cartCounterId);
+    cartCounter = await screen.findByTestId(CART_COUNTER_ID);
     expect(cartCounter).toHaveTextContent('2');
   });
 });

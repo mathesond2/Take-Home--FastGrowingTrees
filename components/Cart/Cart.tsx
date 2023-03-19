@@ -1,5 +1,6 @@
 import { formatUSD, primaryRed } from '@/util';
-import { useCart, CartState } from '@/util/CartContext';
+import { CartState, useCart } from '@/util/CartContext';
+import { CART_COUNTER_ID } from '@/util/constants';
 import {
   Box,
   Center,
@@ -47,8 +48,6 @@ const iconButtonProps = {
   isRound: true,
 };
 
-export const cartCounterId = 'cart-counter';
-
 function filterCartUniqueItems(cart: CartState) {
   if (!cart) return [];
 
@@ -73,7 +72,7 @@ export default function Cart() {
   const CartCounter = () => (
     <Box position="absolute" right={-2} top={-1.5}>
       <Circle size={5} bg={primaryRed} fontSize="xs">
-        <Text color="white" data-testid={cartCounterId}>
+        <Text color="white" data-testid={CART_COUNTER_ID}>
           {cart?.length}
         </Text>
       </Circle>

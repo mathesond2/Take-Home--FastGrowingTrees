@@ -2,14 +2,6 @@ import { formatUSD } from '@/util';
 import { HStack, Icon, IconButton, Text, VStack } from '@chakra-ui/react';
 import { HiOutlineMinusSm, HiOutlinePlusSm } from 'react-icons/hi';
 
-type CartItemIncrementorProps = {
-  title: string;
-  price: number;
-  quantity: number;
-  onClickLeft: () => void;
-  onClickRight: () => void;
-};
-
 const iconButtonProps = {
   bgColor: 'transparent',
   borderStyle: 'solid',
@@ -25,6 +17,14 @@ const iconButtonProps = {
 const iconProps = {
   boxSize: 5,
   color: 'black',
+};
+
+type CartItemIncrementorProps = {
+  title: string;
+  price: number;
+  quantity: number;
+  onClickLeft: () => void;
+  onClickRight: () => void;
 };
 
 export default function CartItemIncrementor({

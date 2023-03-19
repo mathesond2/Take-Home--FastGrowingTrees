@@ -8,9 +8,7 @@ export default function RecommendedItems() {
   const { loading, error, data } = recommendationData;
 
   if (loading) return <Text>Loading...</Text>;
-  if (error) return null;
-
-  if (!data?.length) return null;
+  if (!data?.length || error) return null;
 
   return (
     <>

@@ -4,6 +4,7 @@ import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext,
 import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from './constants';
 
 export type CartState = ParsedProduct[] | undefined;
+
 type ContextState = {
   cart: CartState;
   setCart: Dispatch<SetStateAction<CartState>>;

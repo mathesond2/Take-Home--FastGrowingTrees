@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react';
 
 const thumbnailSize = '110';
 const maxWidth = '12.75rem';
+
 type CartItemProps = {
   src: string;
   alt: string;
