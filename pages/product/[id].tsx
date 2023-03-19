@@ -19,7 +19,7 @@ export const getStaticPaths: GetStaticPaths<Params> = async () => {
   const res = productsHandler();
   const data: ParsedProducts = await res.json();
 
-  const paths = data.products.map(({ id }) => ({
+  const paths = data.map(({ id }) => ({
     params: { id: id.toString() },
   }));
 

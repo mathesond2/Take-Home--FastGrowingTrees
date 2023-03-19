@@ -9,12 +9,8 @@ function parseProductsData(data: RawData): ParsedProducts {
     });
   }
 
-  const { products, recommendations } = data;
-
-  return {
-    products: parseData(products),
-    recommendations: parseData(recommendations),
-  };
+  const { products } = data;
+  return parseData(products);
 }
 
 export const config = {

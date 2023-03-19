@@ -7,10 +7,7 @@ type OverviewProduct = Pick<Product, 'id' | 'title'>;
 type OverviewThumbnail = Pick<Thumbnail, 'src'>;
 export type ProductOverview = OverviewProduct & OverviewThumbnail;
 
-export type ParsedProducts = {
-  products: ProductOverview[];
-  recommendations: ProductOverview[];
-};
+export type ParsedProducts = ProductOverview[];
 
 type ProductDetail = Pick<Product, 'id' | 'title' | 'body' | 'price' | 'product_type'>;
 type ProductDetailImage = Pick<Thumbnail, 'src' | 'alt'>;
