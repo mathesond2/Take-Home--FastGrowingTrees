@@ -1,5 +1,5 @@
 import { formatUSD, primaryRed } from '@/util';
-import { useCart } from '@/util/CartContext';
+import { useCart, CartState } from '@/util/CartContext';
 import {
   Box,
   Center,
@@ -49,11 +49,11 @@ const iconButtonProps = {
 
 export const cartCounterId = 'cart-counter';
 
-function filterUniqueItems(arr: unknown[] | undefined) {
-  if (!arr) return [];
+function filterCartUniqueItems(cart: CartState) {
+  if (!cart) return [];
 
   const seenItems = new Set();
-  return arr.filter((item) => {
+  return cart.filter((item) => {
     const itemString = JSON.stringify(item);
     if (!seenItems.has(itemString)) {
       seenItems.add(itemString);
@@ -67,7 +67,7 @@ export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
   const { cart, setCart } = useCart();
-  const uniqueCart = filterUniqueItems(cart);
+  const uniqueCart = filterCartUniqueItems(cart);
   const cartSubtotal = cart?.reduce((acc, { price }) => acc + price, 0) || 0;
 
   const CartCounter = () => (
