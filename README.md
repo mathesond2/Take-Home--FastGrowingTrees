@@ -1,6 +1,6 @@
 # Fastest Growing Trees™️
 
-## Get Started
+## Get started
 
 1. Install dependencies: `npm i`.
 1. Run development server: `npm run dev`
@@ -24,13 +24,14 @@ API routes may be accessed via:
 - [Typescript](https://www.typescriptlang.org/)
 - [Jest](https://jestjs.io/)
 - [Testing Library](https://testing-library.com/)
+- [Prettier](https://prettier.io/)
 
 ## Implementation details
 
 1. The application was created via static site generation as performance was a primary focal point in my decisions (per our prior conversation on the new fastgrowingtrees site).
 1. Considering this as a production environment, I chose not to use the latest NextJS `/app` features (still in beta), instead leveraging currrent features in Next13 using the existing `/pages` directory.
 1. The given JSON file's products contained some unnecessary data (for the designs given), so I parsed them out at the API level to reduce complexity on the UI side, only using what is needed now.
-1. data may be fetched via API endpoints, though page and product page data were created via calling the handlers directly (within `getStaticProps` and `getStaticPaths`).
+1. data may be fetched via API endpoints (utilizing edge runtime), though page and product page data were created via calling the handlers directly (within `getStaticProps` and `getStaticPaths`).
 1. Future thoughts
    1. modify the given JSON data schema, using `id` as key for faster product lookup
    2. persist cart data further (upon refresh) via a localStorage
