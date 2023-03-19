@@ -1,4 +1,4 @@
-import { CartProvider } from '@/util/CartContext';
+import { CartContext, CartProvider } from '@/util/CartContext';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Cart from '../../components/Cart/Cart';
@@ -9,7 +9,21 @@ import { CART_COUNTER_ID } from '../../util/constants';
 describe('Product page', () => {
   it('renders page with elements', () => {
     const { src, title, body } = testProduct;
-    render(<ProductPage product={testProduct} />);
+    const value = {
+      cart: [testProduct],
+      setCart: jest.fn(),
+      recommendationData: {
+        data: [],
+        loading: false,
+        error: false,
+      },
+    };
+
+    render(
+      <CartContext.Provider value={value}>
+        <ProductPage product={testProduct} />
+      </CartContext.Provider>,
+    );
 
     const image = screen.getByRole('img', { src });
     expect(image).toBeInTheDocument();

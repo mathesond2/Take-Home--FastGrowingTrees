@@ -1,5 +1,6 @@
 import { ParsedProduct } from '@/types/data';
 import { useEffect, useReducer } from 'react';
+import { DEV_URL, PROD_URL } from '@/util/constants';
 
 type FetchAction = {
   readonly type: 'error' | 'loading' | 'success';
@@ -58,7 +59,8 @@ export function useRecommendations(): RecommendationsFetchState {
     const fetchData = async () => {
       dispatchFetchData({ type: 'loading' });
       try {
-        const res = await fetchEndpoint('/api/recommendations');
+        const url = process.env.NODE_ENV === 'development' ? DEV_URL : PROD_URL;
+        const res = await fetchEndpoint(`${url}/api/recommendations`);
         if (res) {
           dispatchFetchData({
             type: 'success',
