@@ -59,8 +59,6 @@ export function useRecommendations(): FetchState {
       dispatchFetchData({ type: 'loading' });
       try {
         const res = await fetchEndpoint('/api/recommendations');
-        console.log('res', res);
-
         if (res) {
           dispatchFetchData({
             type: 'success',
