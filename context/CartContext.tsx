@@ -13,8 +13,18 @@ type ContextState = {
 export const CartContext = createContext({} as ContextState);
 
 export function CartProvider({ children }: PropsWithChildren) {
-  const recommendationData = useRecommendations();
+  const rawRecommendationData = useRecommendations();
+  const { data: recommendations } = rawRecommendationData;
   const [data, dispatch] = useReducer(fetchDataReducer, []);
+
+  const parsedRecommendations = recommendations ? filterRecommendations(recommendations, data) : null;
+  const { loading, error } = rawRecommendationData;
+  const recommendationData = {
+    data: parsedRecommendations,
+    loading,
+    error,
+  };
+
   const value = useMemo(() => ({ data, dispatch, recommendationData }), [data, recommendationData]);
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
@@ -46,8 +56,6 @@ export function useCart() {
   }
 
   const { data, dispatch, recommendationData } = context;
-  const { data: recommendations } = recommendationData;
-  const parsedRecommendations = recommendations ? filterRecommendations(recommendations, data) : null;
 
   function addCartItem(product: ParsedProduct) {
     dispatch({ type: 'ADD_CART_ITEM', payload: product });
@@ -66,10 +74,6 @@ export function useCart() {
     addCartItem,
     removeCartItem,
     removeCartItemQuantity,
-    recommendationData: {
-      data: parsedRecommendations,
-      loading: recommendationData.loading,
-      error: recommendationData.error,
-    },
+    recommendationData,
   };
 }
