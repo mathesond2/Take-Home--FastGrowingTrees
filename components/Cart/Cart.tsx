@@ -80,7 +80,7 @@ export default function Cart() {
   );
 
   return (
-    <>
+    <aside>
       <Box onClick={onOpen} position="relative">
         <IconButton
           ref={btnRef}
@@ -115,7 +115,7 @@ export default function Cart() {
                       title={title}
                       price={price}
                       quantity={itemQuantity}
-                      onClickLeft={() => {
+                      onIncrementLeft={() => {
                         if (itemQuantity > 1) {
                           const itemIndex = cart!.findIndex((item) => item.id === id);
                           if (itemIndex > -1) {
@@ -127,7 +127,7 @@ export default function Cart() {
                           }
                         }
                       }}
-                      onClickRight={() => {
+                      onIncrementRight={() => {
                         const foundItem = cart!.find((item) => item.id === id);
                         if (foundItem) {
                           setCart((prev) => prev && [...prev, foundItem]);
@@ -163,6 +163,6 @@ export default function Cart() {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </aside>
   );
 }

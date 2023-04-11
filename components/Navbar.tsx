@@ -6,11 +6,13 @@ import Cart from './Cart/Cart';
 
 export default function Navbar() {
   return (
-    <Flex justifyContent="space-between" alignItems="center" mb={10}>
-      <Link href="/">
-        <Image src={iconSVG} alt="cluster of trees" />
-      </Link>
-      <Cart />
-    </Flex>
+    <header>
+      <Flex justifyContent="space-between" alignItems="center" mb={10}>
+        <Link href="/">
+          <Image src={iconSVG} alt="cluster of trees" />
+        </Link>
+        <Cart />
+      </Flex>
+    </header>
   );
 }

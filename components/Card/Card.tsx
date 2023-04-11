@@ -1,4 +1,4 @@
-import { Box, Card, CardBody, CardFooter, Text } from '@chakra-ui/react';
+import { Box, Card as ChakraCard, CardBody, CardFooter, Text } from '@chakra-ui/react';
 import ImageWithFallback from '../ImageWithFallback';
 import styles from './Card.module.css';
 
@@ -6,14 +6,14 @@ const imgHeight = '15.75rem';
 const imgWidth = '100%';
 const textMaxWidth = '8.625rem';
 
-type ItemCardProps = {
+type CardProps = {
   src: string;
   title: string;
 };
 
-export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
+export default function Card({ src, title }: CardProps): JSX.Element {
   return (
-    <Card
+    <ChakraCard
       display="inline-flex"
       size="lg"
       borderRadius="md"
@@ -40,6 +40,6 @@ export default function ItemCard({ src, title }: ItemCardProps): JSX.Element {
           {title}
         </Text>
       </CardFooter>
-    </Card>
+    </ChakraCard>
   );
 }
