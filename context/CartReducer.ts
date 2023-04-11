@@ -5,7 +5,7 @@ export type FetchAction = {
   readonly payload: ParsedProduct;
 };
 
-export type FetchState = ParsedProduct[] | [];
+export type FetchState = ParsedProduct[];
 
 export const fetchDataReducer = (state: FetchState, action: FetchAction): FetchState => {
   const { type, payload } = action;
