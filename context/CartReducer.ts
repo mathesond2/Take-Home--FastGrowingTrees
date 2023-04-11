@@ -16,9 +16,7 @@ export const fetchDataReducer = (state: FetchState, action: FetchAction): FetchS
       if (state.length > 1) {
         const itemIndex = state.findIndex((item) => item.id === payload.id);
         if (itemIndex > -1) {
-          const newCart = [...state];
-          newCart.splice(itemIndex, 1);
-          return newCart;
+          return [...state.slice(0, itemIndex), ...state.slice(itemIndex + 1)];
         }
       }
       return state;
