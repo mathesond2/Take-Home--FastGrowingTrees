@@ -117,7 +117,7 @@ export default function Cart() {
                       title={title}
                       price={price}
                       quantity={itemQuantity}
-                      onIncrementLeft={() => {
+                      onDecrement={() => {
                         if (itemQuantity > 1) {
                           const itemIndex = data!.findIndex((item) => item.id === id);
                           if (itemIndex > -1) {
@@ -125,7 +125,7 @@ export default function Cart() {
                           }
                         }
                       }}
-                      onIncrementRight={() => {
+                      onIncrement={() => {
                         const foundItem = data!.find((item) => item.id === id);
                         if (foundItem) {
                           addCartItem(foundItem);
