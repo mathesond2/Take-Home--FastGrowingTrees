@@ -1,13 +1,12 @@
 import { RecommendationsFetchState, useRecommendations } from '@/hooks/useRecommendations';
 import { ParsedProduct } from '@/types/data';
-import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useMemo, useState } from 'react';
+import { Dispatch, PropsWithChildren, createContext, useContext, useMemo, useReducer } from 'react';
 import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from '../util/constants';
-
-export type CartState = ParsedProduct[] | undefined;
+import { FetchAction, FetchState, fetchDataReducer } from './CartReducer';
 
 type ContextState = {
-  cart: CartState;
-  setCart: Dispatch<SetStateAction<CartState>>;
+  data: FetchState;
+  dispatch: Dispatch<FetchAction>;
   recommendationData: RecommendationsFetchState;
 };
 
@@ -15,12 +14,12 @@ export const CartContext = createContext({} as ContextState);
 
 export function CartProvider({ children }: PropsWithChildren) {
   const recommendationData = useRecommendations();
-  const [cart, setCart] = useState(undefined as CartState);
-  const value = useMemo(() => ({ cart, setCart, recommendationData }), [cart, recommendationData]);
+  const [data, dispatch] = useReducer(fetchDataReducer, []);
+  const value = useMemo(() => ({ data, dispatch, recommendationData }), [data, recommendationData]);
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-function filterRecommendations(recommendations: ParsedProduct[], cart: CartState) {
+function filterRecommendations(recommendations: ParsedProduct[], cart: FetchState) {
   const recommendationsWithoutPruner = recommendations?.filter((item) => item.id !== PRUNER_ID);
   const prunerInCart = cart?.find((item) => item.id === PRUNER_ID);
 
@@ -46,13 +45,27 @@ export function useCart() {
     throw new Error('useCart must be used within a CartProvider');
   }
 
-  const { cart, setCart, recommendationData } = context;
+  const { data, dispatch, recommendationData } = context;
   const { data: recommendations } = recommendationData;
-  const parsedRecommendations = recommendations ? filterRecommendations(recommendations, cart) : null;
+  const parsedRecommendations = recommendations ? filterRecommendations(recommendations, data) : null;
+
+  function addCartItem(product: ParsedProduct) {
+    dispatch({ type: 'ADD_CART_ITEM', payload: product });
+  }
+
+  function removeCartItem(product: ParsedProduct) {
+    dispatch({ type: 'REMOVE_CART_ITEM', payload: product });
+  }
+
+  function removeCartItemQuantity(product: ParsedProduct) {
+    dispatch({ type: 'REMOVE_CART_ITEM_QUANTITY', payload: product });
+  }
 
   return {
-    cart,
-    setCart,
+    data,
+    addCartItem,
+    removeCartItem,
+    removeCartItemQuantity,
     recommendationData: {
       data: parsedRecommendations,
       loading: recommendationData.loading,

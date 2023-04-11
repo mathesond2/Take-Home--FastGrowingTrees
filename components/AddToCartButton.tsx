@@ -4,7 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { Button } from '@chakra-ui/react';
 
 export default function AddToCartButton({ product }: { product: ParsedProduct }) {
-  const { setCart } = useCart();
+  const { addCartItem } = useCart();
   return (
     <Button
       bgColor={primaryRed}
@@ -12,7 +12,7 @@ export default function AddToCartButton({ product }: { product: ParsedProduct })
       color="white"
       size="lg"
       onClick={() => {
-        setCart((prev) => [...(prev || []), product]);
+        addCartItem(product);
       }}
     >
       Add to Cart

@@ -4,7 +4,7 @@ import { HiOutlinePlusSm } from 'react-icons/hi';
 import CartItem from './CartItem';
 
 export default function RecommendedItems() {
-  const { recommendationData, setCart } = useCart();
+  const { recommendationData, addCartItem } = useCart();
   const { loading, error, data } = recommendationData;
 
   if (loading) return <Text>Loading...</Text>;
@@ -32,11 +32,7 @@ export default function RecommendedItems() {
           >
             <IconButton
               onClick={() => {
-                setCart((prev) => {
-                  const newCart = prev?.length ? [...prev] : [];
-                  newCart.push(product);
-                  return newCart;
-                });
+                addCartItem(product);
               }}
               aria-label={`add recommended item (${title})`}
               icon={<Icon as={HiOutlinePlusSm} boxSize={7} color="black" />}
