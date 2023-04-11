@@ -1,6 +1,6 @@
 import { RecommendationsFetchState, useRecommendations } from '@/hooks/useRecommendations';
 import { ParsedProduct } from '@/types/data';
-import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
+import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useMemo, useState } from 'react';
 import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from '../util/constants';
 
 export type CartState = ParsedProduct[] | undefined;
@@ -16,7 +16,7 @@ export const CartContext = createContext({} as ContextState);
 export function CartProvider({ children }: PropsWithChildren) {
   const recommendationData = useRecommendations();
   const [cart, setCart] = useState(undefined as CartState);
-  const value = { cart, setCart, recommendationData };
+  const value = useMemo(() => ({ cart, setCart, recommendationData }), [cart, recommendationData]);
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
