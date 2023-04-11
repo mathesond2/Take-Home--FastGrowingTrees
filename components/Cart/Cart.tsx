@@ -1,5 +1,6 @@
+import { useCart } from '@/context/CartContext';
+import { FetchState } from '@/context/CartReducer';
 import { formatUSD, primaryRed } from '@/util';
-import { CartState, useCart } from '@/util/CartContext';
 import { CART_COUNTER_ID } from '@/util/constants';
 import {
   Box,
@@ -48,7 +49,7 @@ const iconButtonProps = {
   isRound: true,
 };
 
-function filterCartUniqueItems(cart: CartState) {
+function filterCartUniqueItems(cart: FetchState) {
   if (!cart) return [];
 
   const seenItems = new Set();
@@ -65,22 +66,22 @@ function filterCartUniqueItems(cart: CartState) {
 export default function Cart() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef(null);
-  const { cart, setCart } = useCart();
-  const uniqueCart = filterCartUniqueItems(cart);
-  const cartSubtotal = cart?.reduce((acc, { price }) => acc + price, 0) || 0;
+  const { data, addCartItem, removeCartItem, removeCartItemQuantity } = useCart();
+  const uniqueCart = filterCartUniqueItems(data);
+  const cartSubtotal = data?.reduce((acc, { price }) => acc + price, 0) || 0;
 
   const CartCounter = () => (
     <Box position="absolute" right={-2} top={-1.5}>
       <Circle size={5} bg={primaryRed} fontSize="xs">
         <Text color="white" data-testid={CART_COUNTER_ID}>
-          {cart?.length}
+          {data?.length}
         </Text>
       </Circle>
     </Box>
   );
 
   return (
-    <>
+    <aside>
       <Box onClick={onOpen} position="relative">
         <IconButton
           ref={btnRef}
@@ -89,7 +90,7 @@ export default function Cart() {
           borderColor="initial"
           {...iconButtonProps}
         />
-        {cart && cart.length > 0 && <CartCounter />}
+        {data && data.length > 0 && <CartCounter />}
       </Box>
       <Drawer isOpen={isOpen} placement="right" onClose={onClose} finalFocusRef={btnRef} size="md">
         <DrawerOverlay />
@@ -103,8 +104,9 @@ export default function Cart() {
 
           <DrawerBody>
             <CartProgressBar cartSubtotal={cartSubtotal} />
-            {uniqueCart.map(({ id, title, price, src, alt }) => {
-              const itemQuantity = cart?.filter((item) => item.id === id).length || 0;
+            {uniqueCart.map((item) => {
+              const { id, title, price, src, alt } = item;
+              const itemQuantity = data?.filter((item) => item.id === id).length || 0;
               return (
                 <CartItem
                   key={id}
@@ -115,22 +117,18 @@ export default function Cart() {
                       title={title}
                       price={price}
                       quantity={itemQuantity}
-                      onClickLeft={() => {
+                      onDecrement={() => {
                         if (itemQuantity > 1) {
-                          const itemIndex = cart!.findIndex((item) => item.id === id);
+                          const itemIndex = data!.findIndex((item) => item.id === id);
                           if (itemIndex > -1) {
-                            setCart((prev) => {
-                              const newCart = prev?.length ? [...prev] : [];
-                              newCart.splice(itemIndex, 1);
-                              return newCart;
-                            });
+                            removeCartItemQuantity(item);
                           }
                         }
                       }}
-                      onClickRight={() => {
-                        const foundItem = cart!.find((item) => item.id === id);
+                      onIncrement={() => {
+                        const foundItem = data!.find((item) => item.id === id);
                         if (foundItem) {
-                          setCart((prev) => prev && [...prev, foundItem]);
+                          addCartItem(foundItem);
                         }
                       }}
                     />
@@ -138,7 +136,7 @@ export default function Cart() {
                 >
                   <IconButton
                     onClick={() => {
-                      setCart((prev) => prev?.filter((item) => item.id !== id));
+                      removeCartItem(item);
                     }}
                     aria-label="remove from cart"
                     icon={<Icon as={IoTrash} boxSize={6} color={primaryRed} />}
@@ -163,6 +161,6 @@ export default function Cart() {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
-    </>
+    </aside>
   );
 }

@@ -1,5 +1,5 @@
 import { createShippingStatusText, freeShippingStatusText } from '@/components/Cart/CartProgressBar';
-import { CartContext, CartProvider } from '@/util/CartContext';
+import { CartContext, CartProvider } from '@/context/CartContext';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Cart from '../../components/Cart/Cart';

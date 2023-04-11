@@ -1,26 +1,35 @@
 import { RecommendationsFetchState, useRecommendations } from '@/hooks/useRecommendations';
 import { ParsedProduct } from '@/types/data';
-import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
-import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from './constants';
-
-export type CartState = ParsedProduct[] | undefined;
+import { Dispatch, PropsWithChildren, createContext, useContext, useMemo, useReducer } from 'react';
+import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from '../util/constants';
+import { FetchAction, FetchState, fetchDataReducer } from './CartReducer';
 
 type ContextState = {
-  cart: CartState;
-  setCart: Dispatch<SetStateAction<CartState>>;
+  data: FetchState;
+  dispatch: Dispatch<FetchAction>;
   recommendationData: RecommendationsFetchState;
 };
 
 export const CartContext = createContext({} as ContextState);
 
 export function CartProvider({ children }: PropsWithChildren) {
-  const recommendationData = useRecommendations();
-  const [cart, setCart] = useState(undefined as CartState);
-  const value = { cart, setCart, recommendationData };
+  const rawRecommendationData = useRecommendations();
+  const { data: recommendations } = rawRecommendationData;
+  const [data, dispatch] = useReducer(fetchDataReducer, []);
+
+  const parsedRecommendations = recommendations ? filterRecommendations(recommendations, data) : null;
+  const { loading, error } = rawRecommendationData;
+  const recommendationData = {
+    data: parsedRecommendations,
+    loading,
+    error,
+  };
+
+  const value = useMemo(() => ({ data, dispatch, recommendationData }), [data, recommendationData]);
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
-function filterRecommendations(recommendations: ParsedProduct[], cart: CartState) {
+function filterRecommendations(recommendations: ParsedProduct[], cart: FetchState) {
   const recommendationsWithoutPruner = recommendations?.filter((item) => item.id !== PRUNER_ID);
   const prunerInCart = cart?.find((item) => item.id === PRUNER_ID);
 
@@ -46,17 +55,25 @@ export function useCart() {
     throw new Error('useCart must be used within a CartProvider');
   }
 
-  const { cart, setCart, recommendationData } = context;
-  const { data: recommendations } = recommendationData;
-  const parsedRecommendations = recommendations ? filterRecommendations(recommendations, cart) : null;
+  const { data, dispatch, recommendationData } = context;
+
+  function addCartItem(product: ParsedProduct) {
+    dispatch({ type: 'ADD_CART_ITEM', payload: product });
+  }
+
+  function removeCartItem(product: ParsedProduct) {
+    dispatch({ type: 'REMOVE_CART_ITEM', payload: product });
+  }
+
+  function removeCartItemQuantity(product: ParsedProduct) {
+    dispatch({ type: 'REMOVE_CART_ITEM_QUANTITY', payload: product });
+  }
 
   return {
-    cart,
-    setCart,
-    recommendationData: {
-      data: parsedRecommendations,
-      loading: recommendationData.loading,
-      error: recommendationData.error,
-    },
+    data,
+    addCartItem,
+    removeCartItem,
+    removeCartItemQuantity,
+    recommendationData,
   };
 }

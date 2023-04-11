@@ -23,16 +23,16 @@ type CartItemIncrementorProps = {
   title: string;
   price: number;
   quantity: number;
-  onClickLeft: () => void;
-  onClickRight: () => void;
+  onDecrement: () => void;
+  onIncrement: () => void;
 };
 
 export default function CartItemIncrementor({
   title,
   price,
   quantity,
-  onClickLeft,
-  onClickRight,
+  onDecrement,
+  onIncrement,
 }: CartItemIncrementorProps) {
   return (
     <VStack spacing={4} alignItems="normal" ml={5}>
@@ -40,7 +40,7 @@ export default function CartItemIncrementor({
       <Text>{formatUSD(price)}</Text>
       <HStack>
         <IconButton
-          onClick={onClickLeft}
+          onClick={onDecrement}
           aria-label={`decrease quantity by one (${title})`}
           icon={<Icon as={HiOutlineMinusSm} {...iconProps} />}
           {...iconButtonProps}
@@ -49,7 +49,7 @@ export default function CartItemIncrementor({
           {quantity}
         </Text>
         <IconButton
-          onClick={onClickRight}
+          onClick={onIncrement}
           aria-label={`increase quantity by one (${title})`}
           icon={<Icon as={HiOutlinePlusSm} {...iconProps} />}
           {...iconButtonProps}

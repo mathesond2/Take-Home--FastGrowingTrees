@@ -1,5 +1,5 @@
 import '@/styles/globals.css';
-import { CartProvider } from '@/util/CartContext';
+import { CartProvider } from '@/context/CartContext';
 import { inter } from '@/util/fonts';
 import theme from '@/util/theme';
 import { ChakraProvider } from '@chakra-ui/react';
