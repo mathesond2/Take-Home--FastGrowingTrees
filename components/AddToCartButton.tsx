@@ -1,6 +1,6 @@
 import { ParsedProduct } from '@/types/data';
 import { primaryRed } from '@/util';
-import { useCart } from '@/util/CartContext';
+import { useCart } from '@/context/CartContext';
 import { Button } from '@chakra-ui/react';
 
 export default function AddToCartButton({ product }: { product: ParsedProduct }) {

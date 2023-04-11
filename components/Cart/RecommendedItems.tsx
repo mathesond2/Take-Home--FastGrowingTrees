@@ -1,4 +1,4 @@
-import { useCart } from '@/util/CartContext';
+import { useCart } from '@/context/CartContext';
 import { Flex, Icon, IconButton, Text } from '@chakra-ui/react';
 import { HiOutlinePlusSm } from 'react-icons/hi';
 import CartItem from './CartItem';

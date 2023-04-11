@@ -1,5 +1,5 @@
 import { formatUSD, primaryRed } from '@/util';
-import { CartState, useCart } from '@/util/CartContext';
+import { CartState, useCart } from '@/context/CartContext';
 import { CART_COUNTER_ID } from '@/util/constants';
 import {
   Box,

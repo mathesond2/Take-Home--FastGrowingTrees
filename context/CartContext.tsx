@@ -1,7 +1,7 @@
 import { RecommendationsFetchState, useRecommendations } from '@/hooks/useRecommendations';
 import { ParsedProduct } from '@/types/data';
 import { createContext, Dispatch, PropsWithChildren, SetStateAction, useContext, useState } from 'react';
-import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from './constants';
+import { PRUNER_ID, TREE_PLANTING_KIT_ID, TREE_PRODUCT_TYPE } from '../util/constants';
 
 export type CartState = ParsedProduct[] | undefined;
 
